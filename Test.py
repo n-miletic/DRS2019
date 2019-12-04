@@ -47,11 +47,12 @@ class MainMenu(QWidget):
         self.setLayout(windowLayout)
 
         self.widget1.clicked.connect(self.on_pushSinglePlayerButton_clicked)
-        self.dialog = GameWindow(self)
-
+        self.dialogs = list()
         self.show()
 
     def on_pushSinglePlayerButton_clicked(self):
+        dialog = GameWindow(self)
+        self.dialogs.append(dialog)
         self.dialog.show()
 
     def center(self):
