@@ -11,7 +11,7 @@ class GameWindow(QWidget):
 
         self.size = 64
         self.setWindowTitle('Donkey Kong')
-        self.setGeometry(300, 150, 5*self.size, 15*self.size)
+        self.setGeometry(300, 150, 5*self.size, 10*self.size)
         self.center()
 
         self.show()
@@ -47,12 +47,16 @@ class MainMenu(QWidget):
         self.setLayout(windowLayout)
 
         self.widget1.clicked.connect(self.on_pushSinglePlayerButton_clicked)
-        self.dialogs = list()
+        self.dialog = GameWindow()
+
+        self.widget3.clicked.connect(self.on_pushExitButton_clicked)
+
         self.show()
 
+    def on_pushExitButton_clicked(self):
+        self.close()
+
     def on_pushSinglePlayerButton_clicked(self):
-        dialog = GameWindow(self)
-        self.dialogs.append(dialog)
         self.dialog.show()
 
     def center(self):
