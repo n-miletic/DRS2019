@@ -1,6 +1,9 @@
 import sys
+import math
 
-from PyQt5.QtWidgets import QWidget, QApplication, QGridLayout, QPushButton, QGroupBox, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QWidget, QApplication, QGridLayout, QPushButton, QGroupBox, QVBoxLayout, QLabel,\
+    QDesktopWidget
+from PyQt5.QtCore import Qt
 
 
 class Test(QWidget):
@@ -11,20 +14,30 @@ class Test(QWidget):
         self.size = 64
         self.setWindowTitle('Test')
         self.setGeometry(300, 150, 15 * self.size, 11 * self.size)
+        self.center()
+        # coloring
+        self.setAutoFillBackground(True)
+        p = self.palette()
+        p.setColor(self.backgroundRole(), Qt.black)
+        self.setPalette(p)
 
         self.createGridLayout()
-
         windowLayout = QVBoxLayout()
         windowLayout.addWidget(self.horizontalGroupBox)
         self.setLayout(windowLayout)
 
         self.show()
 
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
+
     def createGridLayout(self):
-        self.horizontalGroupBox = QGroupBox("Grid")
+        self.horizontalGroupBox = QGroupBox("")
         layout = QGridLayout()
-        #layout.setColumnStretch(1, 4)
-        #layout.setColumnStretch(2, 4)
 
         widget1 = QPushButton('Single Player')
         widget1.setFixedSize(200,30)
@@ -33,9 +46,9 @@ class Test(QWidget):
         widget3 = QPushButton('Exit')
         widget3.setFixedSize(200,30)
 
-        layout.addWidget(widget1, 1, 1)
-        layout.addWidget(widget2, 2, 1)
-        layout.addWidget(widget3, 3, 1)
+        layout.addWidget(widget1, 5, 0)
+        layout.addWidget(widget2, 6, 0)
+        layout.addWidget(widget3, 7, 0)
         layout.addWidget(QLabel(" "), 0, 1)
         layout.addWidget(QLabel(" "), 4, 1)
         layout.addWidget(QLabel(" "), 5, 1)
