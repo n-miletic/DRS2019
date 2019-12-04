@@ -1,11 +1,6 @@
 import sys
-import math
-import random as rnd
 
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QWidget, QMainWindow, QApplication, QLabel
-from PyQt5.QtGui import QPixmap, QColor, QMovie, QFont
-
+from PyQt5.QtWidgets import QWidget, QApplication
 
 
 class Test(QWidget):
@@ -19,7 +14,9 @@ class Test(QWidget):
 
         self.show()
 
+
 if __name__ == '__main__':
+
     app = QApplication(sys.argv)
     ex = Test()
     sys.exit(app.exec_())
