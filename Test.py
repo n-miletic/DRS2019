@@ -19,9 +19,32 @@ class GameWindow(QMainWindow):
         view = QGraphicsView(self.scene)
         self.setCentralWidget(view)
 
+        self.design = [['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+                       ['e', 'e', 'e', 'b', 'b', 'l', 'b', 'b', 'e', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'l', 'e', 'e', 'e', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'l', 'e', 'e', 'e', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'l', 'e', 'e', 'e', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'l', 'e', 'e', 'e', 'e'],
+                       ['b', 'b', 'l', 'b', 'b', 'l', 'b', 'b', 'e', 'e'],
+                       ['e', 'e', 'l', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+                       ['e', 'e', 'l', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+                       ['e', 'e', 'l', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+                       ['e', 'e', 'l', 'b', 'b', 'b', 'b', 'b', 'l', 'b'],
+                       ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
+                       ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
+                       ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'l', 'b']]
+        # e - empty, b - beam, l - ladder
+
         self.drawScene()
 
         self.show()
+
 
     def center(self):
         qr = self.frameGeometry()
@@ -30,13 +53,15 @@ class GameWindow(QMainWindow):
         self.move(qr.topLeft())
 
     def drawScene(self):
-        for i in range(10):
-            for j in range(20):
-                newRect = QGraphicsRectItem(QRectF(i*32, j*32, self.size, self.size))
-                if j%2 == 0:
-                    newRect.setBrush(Qt.red)
-                else:
+        for i in range(20):
+            for j in range(10):
+                newRect = QGraphicsRectItem(QRectF(j*32, i*32, self.size, self.size))
+                if self.design[i][j] == 'e':
                     newRect.setBrush(Qt.black)
+                elif self.design[i][j] == 'b':
+                    newRect.setBrush(Qt.red)
+                elif self.design[i][j] == 'l':
+                    newRect.setBrush(Qt.magenta)
 
                 self.scene.addItem(newRect)
 
