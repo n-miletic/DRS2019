@@ -1,18 +1,25 @@
 import sys
 
-from PyQt5.QtWidgets import QWidget, QApplication, QGridLayout, QPushButton, QGroupBox, QVBoxLayout, QLabel,\
-    QDesktopWidget
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPainter, QBrush
+from PyQt5.QtWidgets import QWidget, QApplication, QGridLayout, QPushButton, QGroupBox, QVBoxLayout, QLabel, \
+    QDesktopWidget, QGraphicsGridLayout, QGraphicsItem, QGraphicsView, QGraphicsScene, QGraphicsRectItem, QMainWindow
+from PyQt5.QtCore import Qt, QRectF
 
 
-class GameWindow(QWidget):
+class GameWindow(QMainWindow):
     def __init__(self, parent=None):
         super(GameWindow, self).__init__(parent)
 
-        self.size = 64
+        self.size = 32
         self.setWindowTitle('Donkey Kong')
-        self.setGeometry(300, 150, 5*self.size, 10*self.size)
+        self.setGeometry(300, 150, 10*self.size + 5, 20*self.size + 5)
+
         self.center()
+        self.scene = QGraphicsScene(self)
+        view = QGraphicsView(self.scene)
+        self.setCentralWidget(view)
+
+        self.drawScene()
 
         self.show()
 
@@ -21,6 +28,18 @@ class GameWindow(QWidget):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
+    def drawScene(self):
+        for i in range(10):
+            for j in range(20):
+                newRect = QGraphicsRectItem(QRectF(i*32, j*32, self.size, self.size))
+                if j%2 == 0:
+                    newRect.setBrush(Qt.red)
+                else:
+                    newRect.setBrush(Qt.black)
+
+                self.scene.addItem(newRect)
+
 
 class MainMenu(QWidget):
 
@@ -47,7 +66,7 @@ class MainMenu(QWidget):
         self.setLayout(windowLayout)
 
         self.widget1.clicked.connect(self.on_pushSinglePlayerButton_clicked)
-        self.dialog = GameWindow()
+
 
         self.widget3.clicked.connect(self.on_pushExitButton_clicked)
 
@@ -57,7 +76,9 @@ class MainMenu(QWidget):
         self.close()
 
     def on_pushSinglePlayerButton_clicked(self):
+        self.dialog = GameWindow()
         self.dialog.show()
+        self.close()
 
     def center(self):
         qr = self.frameGeometry()
@@ -70,9 +91,9 @@ class MainMenu(QWidget):
         self.horizontalGroupBox = QGroupBox("")
         layout = QGridLayout()
 
-        self.widget1.setFixedSize(200,30)
-        self.widget2.setFixedSize(200,30)
-        self.widget3.setFixedSize(200,30)
+        self.widget1.setFixedSize(200, 30)
+        self.widget2.setFixedSize(200, 30)
+        self.widget3.setFixedSize(200, 30)
 
         layout.addWidget(self.widget1, 5, 0)
         layout.addWidget(self.widget2, 6, 0)
