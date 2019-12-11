@@ -1,8 +1,8 @@
 import sys
 
-from PyQt5.QtGui import QPainter, QBrush
 from PyQt5.QtWidgets import QWidget, QApplication, QGridLayout, QPushButton, QGroupBox, QVBoxLayout, QLabel, \
-    QDesktopWidget, QGraphicsGridLayout, QGraphicsItem, QGraphicsView, QGraphicsScene, QGraphicsRectItem, QMainWindow
+    QDesktopWidget, QGraphicsView, QGraphicsScene, QGraphicsRectItem, QMainWindow, QGraphicsEllipseItem
+
 from PyQt5.QtCore import Qt, QRectF
 
 
@@ -10,9 +10,14 @@ class GameWindow(QMainWindow):
     def __init__(self, parent=None):
         super(GameWindow, self).__init__(parent)
 
+        # enables key event handling
+        self.setFocusPolicy(Qt.StrongFocus)
+        self.keys_pressed = set()
+
         self.size = 32
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 5, 20*self.size + 5)
+        self.is_game_over = False
 
         self.center()
         self.scene = QGraphicsScene(self)
@@ -43,8 +48,42 @@ class GameWindow(QMainWindow):
 
         self.drawScene()
 
+        self.player = QGraphicsEllipseItem(9*self.size, 19*self.size, self.size, self.size)
+        self.player.setBrush(Qt.green)
+        self.player_i = 9
+        self.player_j = 19
+        self.scene.addItem(self.player)
+
         self.show()
 
+    # - when key is pressed
+    def keyPressEvent(self, event):
+        # self.keys_pressed.add(event.key())
+        key = event.key()
+
+        if key == Qt.Key_A:
+            if (self.player_i - 1) > -1:
+                if self.design[self.player_j][self.player_i-1] == 'b' or self.design[self.player_j][self.player_i-1] == 'l':
+                    self.player_i -= 1
+                    self.player.setX(self.player.x()-32)
+
+        if key == Qt.Key_D:
+            if (self.player_i + 1) < 10:
+                if self.design[self.player_j][self.player_i+1] == 'b' or self.design[self.player_j][self.player_i+1] == 'l':
+                    self.player_i += 1
+                    self.player.setX(self.player.x()+32)
+
+        if key == Qt.Key_W:
+            if (self.player_j - 1) > -1:
+                if self.design[self.player_j - 1][self.player_i] == 'l':
+                    self.player_j -= 1
+                    self.player.setY(self.player.y()-32)
+
+        if key == Qt.Key_S:
+            if (self.player_j + 1) < 20:
+                if self.design[self.player_j + 1][self.player_i] == 'l':
+                    self.player_j += 1
+                    self.player.setY(self.player.y() + 32)
 
     def center(self):
         qr = self.frameGeometry()
