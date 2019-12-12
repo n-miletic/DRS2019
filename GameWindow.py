@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphicsEllipseItem, QDesktopWidget, \
     QGraphicsRectItem
 from PyQt5.QtCore import Qt, QRectF
+from Timer import time
 
 
 class GameWindow(QMainWindow):
@@ -11,9 +12,12 @@ class GameWindow(QMainWindow):
         self.setFocusPolicy(Qt.StrongFocus)
         self.keys_pressed = set()
 
+        #basic time to be implemented later into a timer
+        self.statusBar().showMessage('{}'.format(time.toString()))
+
         self.size = 32
         self.setWindowTitle('Donkey Kong')
-        self.setGeometry(300, 150, 10*self.size + 5, 20*self.size + 5)
+        self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
         self.is_game_over = False
 
         self.center()
