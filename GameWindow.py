@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphicsEllipseItem, QDesktopWidget, \
     QGraphicsRectItem
-from PyQt5.QtCore import Qt, QRectF
+from PyQt5.QtCore import Qt, QRectF, QBasicTimer
 from PyQt5.QtGui import QColor
 from Player import Player
 from Timer import time
@@ -22,6 +22,7 @@ class GameWindow(QMainWindow):
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
         self.is_game_over = False
+
 
         self.center()
         self.scene = QGraphicsScene(self)
@@ -59,13 +60,32 @@ class GameWindow(QMainWindow):
         self.kong.setBrush(QColor(123, 63, 0))
         self.kong_i = 0
         self.kong_j = 7
+        self.kong_direction = 1
         self.scene.addItem(self.kong)
 
+        self.game_timer = QBasicTimer()
+        self.game_timer.start(200, self)
+        self.game_timer_id = self.game_timer.timerId()
 
         self.show()
 
+    # - timer event starting the loop
+    def timerEvent(self, event):
+        if self.game_timer_id == event.timerId():
+            if 10 > (self.kong_i + self.kong_direction) > -1:
+                if self.design[self.kong_j][self.kong_i + self.kong_direction] == 'b' or self.design[self.kong_j][self.kong_i + self.kong_direction] == 'l':
+                    self.kong.setX(self.kong_x() + (self.size * self.kong_direction))
+                else:
+                    self.kong_direction = self.kong_direction*(-1)
+
+        # if self.is_game_over is False:
+            # self.game_update()
+    # def game_update(self):
+        # self.kong.setX(self.kong.x()+32)
+
     # - when key is pressed
     def keyPressEvent(self, event):
+        self.kong.x() + 32
         # self.keys_pressed.add(event.key())
         key = event.key()
 
