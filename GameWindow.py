@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphicsEllipseItem, QDesktopWidget, \
     QGraphicsRectItem
 from PyQt5.QtCore import Qt, QRectF
+from PyQt5.QtGui import QColor
 from Timer import time
 
 
@@ -54,6 +55,13 @@ class GameWindow(QMainWindow):
         self.player_i = 9
         self.player_j = 19
         self.scene.addItem(self.player)
+
+        self.kong = QGraphicsEllipseItem(0*self.size, 7*self.size, self.size, self.size)
+        self.kong.setBrush(QColor(123, 63, 0))
+        self.kong_i = 0
+        self.kong_j = 7
+        self.scene.addItem(self.kong)
+
 
         self.show()
 
