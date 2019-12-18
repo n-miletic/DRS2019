@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphic
     QGraphicsRectItem
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QColor
+from Player import Player
 from Timer import time
 
 
@@ -14,6 +15,7 @@ class GameWindow(QMainWindow):
         self.keys_pressed = set()
 
         #basic time to be implemented later into a timer
+
         self.statusBar().showMessage('{}'.format(time.toString()))
 
         self.size = 32
@@ -41,7 +43,7 @@ class GameWindow(QMainWindow):
                        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
                        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
                        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
-                       ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
+                       ['e', 'e', 'e', 'b', 'b', 'b', 'b', 'b', 'l', 'b'],
                        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
                        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
                        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
@@ -50,11 +52,8 @@ class GameWindow(QMainWindow):
 
         self.drawScene()
 
-        self.player = QGraphicsEllipseItem(9*self.size, 19*self.size, self.size, self.size)
-        self.player.setBrush(Qt.green)
-        self.player_i = 9
-        self.player_j = 19
-        self.scene.addItem(self.player)
+        self.player = Player(9, 19, 86, 130, 3, self.size)
+        self.scene.addItem(self.player.type)
 
         self.kong = QGraphicsEllipseItem(0*self.size, 7*self.size, self.size, self.size)
         self.kong.setBrush(QColor(123, 63, 0))
@@ -71,28 +70,28 @@ class GameWindow(QMainWindow):
         key = event.key()
 
         if key == Qt.Key_A:
-            if (self.player_i - 1) > -1:
-                if self.design[self.player_j][self.player_i-1] == 'b' or self.design[self.player_j][self.player_i-1] == 'l':
-                    self.player_i -= 1
-                    self.player.setX(self.player.x()-32)
+            if (self.player.i - 1) > -1:
+                if self.design[self.player.j][self.player.i-1] == 'b' or self.design[self.player.j][self.player.i-1] == 'l':
+                    self.player.i -= 1
+                    self.player.type.setX(self.player.type.x()-32)
 
         if key == Qt.Key_D:
-            if (self.player_i + 1) < 10:
-                if self.design[self.player_j][self.player_i+1] == 'b' or self.design[self.player_j][self.player_i+1] == 'l':
-                    self.player_i += 1
-                    self.player.setX(self.player.x()+32)
+            if (self.player.i + 1) < 10:
+                if self.design[self.player.j][self.player.i+1] == 'b' or self.design[self.player.j][self.player.i+1] == 'l':
+                    self.player.i += 1
+                    self.player.type.setX(self.player.type.x()+32)
 
         if key == Qt.Key_W:
-            if (self.player_j - 1) > -1:
-                if self.design[self.player_j - 1][self.player_i] == 'l':
-                    self.player_j -= 1
-                    self.player.setY(self.player.y()-32)
+            if (self.player.j - 1) > -1:
+                if self.design[self.player.j - 1][self.player.i] == 'l':
+                    self.player.j -= 1
+                    self.player.type.setY(self.player.type.y()-32)
 
         if key == Qt.Key_S:
-            if (self.player_j + 1) < 20:
-                if self.design[self.player_j + 1][self.player_i] == 'l':
-                    self.player_j += 1
-                    self.player.setY(self.player.y() + 32)
+            if (self.player.j + 1) < 20:
+                if self.design[self.player.j + 1][self.player.i] == 'l':
+                    self.player.j += 1
+                    self.player.type.setY(self.player.type.y() + 32)
 
     def center(self):
         qr = self.frameGeometry()
