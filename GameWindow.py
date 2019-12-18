@@ -74,9 +74,12 @@ class GameWindow(QMainWindow):
         if self.game_timer_id == event.timerId():
             if 10 > (self.kong_i + self.kong_direction) > -1:
                 if self.design[self.kong_j][self.kong_i + self.kong_direction] == 'b' or self.design[self.kong_j][self.kong_i + self.kong_direction] == 'l':
-                    self.kong.setX(self.kong_x() + (self.size * self.kong_direction))
+                    self.kong.setX(self.kong.x() + (self.size * self.kong_direction))
+                    self.kong_i += self.kong_direction
                 else:
                     self.kong_direction = self.kong_direction*(-1)
+            else:
+                self.kong_direction = self.kong_direction * (-1)
 
         # if self.is_game_over is False:
             # self.game_update()
