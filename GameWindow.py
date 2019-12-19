@@ -63,14 +63,40 @@ class GameWindow(QMainWindow):
         self.kong_direction = 1
         self.scene.addItem(self.kong)
 
+        # -timer that synchronizes collision events
+        self.game_update_timer = QBasicTimer()
+        self.game_update_timer.start(20, self)
+
+        # -timer that dictates movement kong's movement
         self.game_timer = QBasicTimer()
         self.game_timer.start(200, self)
         self.game_timer_id = self.game_timer.timerId()
+        # -timer that dictates the speed at which barrels are dropped
+        self.barrel_spawn_timer = QBasicTimer()
+        self.barrel_spawn_timer.start(500, self)
+        self.barrel_sp_Id = self.barrel_spawn_timer.timerId()
+        # -timer that dictates the speed at which barrels are falling
+        self.barrel_speed = 250
+        self.barrel_movement_timer = QBasicTimer()
+        self.barrel_movement_timer.start(self.barrel_speed, self)
+        self.barrel_m_Id = self.barrel_movement_timer.timerId()
+        self.is_barrel_thrown = False
+        # -temporary barrel object
+        self.barrel = QGraphicsEllipseItem(0*self.size, 0*self.size, self.size, self.size)
+        self.barrel.setBrush(QColor(255, 215, 0))
+        self.barrel_i = 0
+        self.barrel_j = 0
 
         self.show()
 
     # - timer event starting the loop
     def timerEvent(self, event):
+        if self.barrel_i == self.player.i and self.barrel_j == self.player.j:
+            self.player.type.setX(0)
+            self.player.type.setY(0)
+            self.player.i = 9
+            self.player.j = 19
+
         if self.game_timer_id == event.timerId():
             if 10 > (self.kong_i + self.kong_direction) > -1:
                 if self.design[self.kong_j][self.kong_i + self.kong_direction] == 'b' or self.design[self.kong_j][self.kong_i + self.kong_direction] == 'l':
@@ -80,6 +106,27 @@ class GameWindow(QMainWindow):
                     self.kong_direction = self.kong_direction*(-1)
             else:
                 self.kong_direction = self.kong_direction * (-1)
+
+        if self.barrel_sp_Id == event.timerId():
+            if not self.is_barrel_thrown:
+                self.is_barrel_thrown = True
+                self.barrel.setX(self.kong.x())
+                self.barrel.setY((self.kong_j+1)*32)
+                self.barrel_i = self.kong_i
+                self.barrel_j = self.kong_j + 1
+                self.scene.addItem(self.barrel)
+
+        if self.barrel_m_Id == event.timerId():
+            if self.is_barrel_thrown:
+                if self.barrel_j < 19:
+                    self.barrel.setY(self.barrel.y()+32)
+                    self.barrel_j += 1
+                else:
+                    # end of the board
+                    self.scene.removeItem(self.barrel)
+                    self.is_barrel_thrown = False
+
+
 
         # if self.is_game_over is False:
             # self.game_update()
