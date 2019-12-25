@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphic
 from PyQt5.QtCore import Qt, QRectF, QBasicTimer
 from PyQt5.QtGui import QColor
 from Player import Player
+from Kong import Kong
 from Timer import time
 
 
@@ -15,15 +16,13 @@ class GameWindow(QMainWindow):
         self.keys_pressed = set()
 
         #basic time to be implemented later into a timer
-
         self.statusBar().showMessage('{}'.format(time.toString()))
 
+        #window settings and basic properties
         self.size = 32
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
-        self.is_game_over = False
-
-
+        #self.isGameOver = False
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)
@@ -53,15 +52,13 @@ class GameWindow(QMainWindow):
 
         self.drawScene()
 
+        #player initialization
         self.player = Player(9, 19, 86, 130, 3, self.size)
         self.scene.addItem(self.player.type)
 
-        self.kong = QGraphicsEllipseItem(0*self.size, 7*self.size, self.size, self.size)
-        self.kong.setBrush(QColor(123, 63, 0))
-        self.kong_i = 0
-        self.kong_j = 7
-        self.kong_direction = 1
-        self.scene.addItem(self.kong)
+        #Donkey Kong initialization
+        self.kong = Kong(0, 7, 123, 63, 0, self.size, 1);
+        self.scene.addItem(self.kong.type)
 
         # -timer that synchronizes collision events
         self.game_update_timer = QBasicTimer()
@@ -98,22 +95,22 @@ class GameWindow(QMainWindow):
             self.player.j = 19
 
         if self.game_timer_id == event.timerId():
-            if 10 > (self.kong_i + self.kong_direction) > -1:
-                if self.design[self.kong_j][self.kong_i + self.kong_direction] == 'b' or self.design[self.kong_j][self.kong_i + self.kong_direction] == 'l':
-                    self.kong.setX(self.kong.x() + (self.size * self.kong_direction))
-                    self.kong_i += self.kong_direction
+            if 10 > (self.kong.i + self.kong.direction) > -1:
+                if self.design[self.kong.j][self.kong.i + self.kong.direction] == 'b' or self.design[self.kong.j][self.kong.i + self.kong.direction] == 'l':
+                    self.kong.type.setX(self.kong.type.x() + (self.size * self.kong.direction))
+                    self.kong.i += self.kong.direction
                 else:
-                    self.kong_direction = self.kong_direction*(-1)
+                    self.kong.direction = self.kong.direction*(-1)
             else:
-                self.kong_direction = self.kong_direction * (-1)
+                self.kong.direction = self.kong.direction * (-1)
 
         if self.barrel_sp_Id == event.timerId():
             if not self.is_barrel_thrown:
                 self.is_barrel_thrown = True
-                self.barrel.setX(self.kong.x())
-                self.barrel.setY((self.kong_j+1)*32)
-                self.barrel_i = self.kong_i
-                self.barrel_j = self.kong_j + 1
+                self.barrel.setX(self.kong.type.x())
+                self.barrel.setY((self.kong.j+1)*32)
+                self.barrel_i = self.kong.i
+                self.barrel_j = self.kong.j + 1
                 self.scene.addItem(self.barrel)
 
         if self.barrel_m_Id == event.timerId():
@@ -135,7 +132,7 @@ class GameWindow(QMainWindow):
 
     # - when key is pressed
     def keyPressEvent(self, event):
-        self.kong.x() + 32
+        self.kong.type.x() + 32
         # self.keys_pressed.add(event.key())
         key = event.key()
 
