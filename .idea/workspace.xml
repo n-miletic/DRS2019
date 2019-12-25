@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f9abb9b-b696-4922-9b51-25cf783093b6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Barrel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Kong.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Barrel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Barrel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -156,7 +155,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576689402762</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Kong class refactored and Barrel class tbm">
+      <created>1577286835088</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1577286835088</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -176,25 +182,34 @@
     <MESSAGE value="Code refactoring" />
     <MESSAGE value="Timer label and Timer file tbm" />
     <MESSAGE value="Player class tbm" />
-    <option name="LAST_COMMIT_MESSAGE" value="Player class tbm" />
+    <MESSAGE value="Kong class refactored and Barrel class tbm" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kong class refactored and Barrel class tbm" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1345" height="139" key="GridCell.Tab.0.bottom" timestamp="1577286169599">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1577286833042">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="139" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1577286169599" />
-    <state width="1345" height="139" key="GridCell.Tab.0.center" timestamp="1577286169598">
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1577286833042" />
+    <state width="754" height="138" key="GridCell.Tab.0.bottom" timestamp="1577287964642">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="139" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1577286169598" />
-    <state width="1345" height="139" key="GridCell.Tab.0.left" timestamp="1577286169598">
+    <state width="754" height="138" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1577287964642" />
+    <state width="754" height="138" key="GridCell.Tab.0.center" timestamp="1577287964641">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="139" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1577286169598" />
-    <state width="1345" height="139" key="GridCell.Tab.0.right" timestamp="1577286169599">
+    <state width="754" height="138" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1577287964641" />
+    <state width="754" height="138" key="GridCell.Tab.0.left" timestamp="1577287964641">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="139" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1577286169599" />
+    <state width="754" height="138" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1577287964641" />
+    <state width="754" height="138" key="GridCell.Tab.0.right" timestamp="1577287964641">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="754" height="138" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1577287964641" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1577286839359">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1577286839359" />
     <state x="379" y="194" key="com.intellij.ide.util.TipDialog" timestamp="1577285044980">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -203,6 +218,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="377" y="165" width="1065" height="675" key="dock-window-1/0.0.1366.738@0.0.1366.738" timestamp="1577285465135" />
+    <state x="771" y="0" width="602" height="745" key="dock-window-2" timestamp="1577287292435">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="771" y="0" width="602" height="745" key="dock-window-2/0.0.1366.738@0.0.1366.738" timestamp="1577287292435" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
