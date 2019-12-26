@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QRectF, QBasicTimer
 from PyQt5.QtGui import QColor
 from Player import Player
 from Kong import Kong
-from Timer import time
+from Timer import time, cur_time
 from Barrel import Barrel
 
 
@@ -17,7 +17,8 @@ class GameWindow(QMainWindow):
         self.keys_pressed = set()
 
         #basic time to be implemented later into a timer
-        self.statusBar().showMessage('{}'.format(time.toString()))
+        #-self.statusBar().showMessage('{}'.format(time.toString()))
+        self.statusBar().showMessage('{}'.format(cur_time))
 
         #window settings and basic properties
         self.size = 32
@@ -78,6 +79,9 @@ class GameWindow(QMainWindow):
         # -timer that dictates the speed at which barrels are falling
         self.barrel.movementTimer.start(self.barrel.speed, self)
         self.barrel.mvmID = self.barrel.movementTimer.timerId()
+
+        # -game time passed
+        self.elapsed_timer = QBasicTimer
 
         self.show()
 
