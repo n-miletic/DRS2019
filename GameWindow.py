@@ -102,7 +102,8 @@ class GameWindow(QMainWindow):
 
     # - timer event starting the loop
     def timerEvent(self, event):
-        if self.barrel.i == self.player.i and self.barrel.j == self.player.j:
+        if self.barrel.i == self.player.i and self.barrel.j == self.player.j and self.barrel.isBarrelThrown:
+            self.barrel.isBarrelThrown = False
             if self.player.isShielded:
                 self.player.isShielded = False
                 self.player.type.setBrush(QColor(86, 130, 3))
