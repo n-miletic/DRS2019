@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2f9abb9b-b696-4922-9b51-25cf783093b6" name="Default Changelist" comment="Kong class refactored and Barrel class tbm">
+    <list default="true" id="2f9abb9b-b696-4922-9b51-25cf783093b6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/PowerUp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Timer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Timer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,9 +76,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="doodling" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DRS2019" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/doodling.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.DonkeyKong" />
+        <item itemvalue="Python.doodling" />
         <item itemvalue="Python.Test" />
       </list>
     </recent_temporary>
@@ -163,7 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577286835088</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Timer class tbm and Power Up tbm">
+      <created>1577386356881</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1577386356882</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -184,33 +212,34 @@
     <MESSAGE value="Timer label and Timer file tbm" />
     <MESSAGE value="Player class tbm" />
     <MESSAGE value="Kong class refactored and Barrel class tbm" />
-    <option name="LAST_COMMIT_MESSAGE" value="Kong class refactored and Barrel class tbm" />
+    <MESSAGE value="Timer class tbm and Power Up tbm" />
+    <option name="LAST_COMMIT_MESSAGE" value="Timer class tbm and Power Up tbm" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1577382844170">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1577386354744">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1577382844170" />
-    <state width="661" height="137" key="GridCell.Tab.0.bottom" timestamp="1577385656613">
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1577386354744" />
+    <state width="1345" height="150" key="GridCell.Tab.0.bottom" timestamp="1577394307032">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="661" height="137" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1577385656613" />
-    <state width="661" height="137" key="GridCell.Tab.0.center" timestamp="1577385656613">
+    <state width="1345" height="150" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1577394307032" />
+    <state width="1345" height="150" key="GridCell.Tab.0.center" timestamp="1577394307032">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="661" height="137" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1577385656613" />
-    <state width="661" height="137" key="GridCell.Tab.0.left" timestamp="1577385656613">
+    <state width="1345" height="150" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1577394307032" />
+    <state width="1345" height="150" key="GridCell.Tab.0.left" timestamp="1577394307032">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="661" height="137" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1577385656613" />
-    <state width="661" height="137" key="GridCell.Tab.0.right" timestamp="1577385656613">
+    <state width="1345" height="150" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1577394307032" />
+    <state width="1345" height="150" key="GridCell.Tab.0.right" timestamp="1577394307032">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="661" height="137" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1577385656613" />
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1577286839359">
+    <state width="1345" height="150" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1577394307032" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1577386375603">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1577286839359" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1577386375603" />
     <state x="379" y="194" key="com.intellij.ide.util.TipDialog" timestamp="1577285044980">
       <screen x="0" y="0" width="1366" height="738" />
     </state>

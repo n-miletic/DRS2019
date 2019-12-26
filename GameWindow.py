@@ -6,12 +6,13 @@ from Player import Player
 from Kong import Kong
 from Timer import GameTime
 from Barrel import Barrel
+from PowerUp import PowerUp
 import random
 
 
 class GameWindow(QMainWindow):
     powerUpTable = (
-        (9, 15), (3, 11), (0,19)
+        (3, 15), (9, 11), (0, 19)
     )
 
     def __init__(self, parent=None):
@@ -58,9 +59,12 @@ class GameWindow(QMainWindow):
                        ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'l', 'b']]
         # e - empty, b - beam, l - ladder, p - power up
 
-        self.setRandomPosition()
-
         self.drawScene()
+
+        #powerUp initialization
+        (a, b) = self.setRandomPosition()
+        self.powerUp = PowerUp(a, b, 0, 0, 255, self.size)
+        self.scene.addItem(self.powerUp.type)
 
         #player initialization
         self.player = Player(9, 19, 86, 130, 3, self.size)
@@ -93,21 +97,22 @@ class GameWindow(QMainWindow):
 
         self.show()
 
-    def setPowerUp(self, position):
-        table = GameWindow.powerUpTable[position]
-        self.design[table] = 'p'
-
     def setRandomPosition(self):
-        self.setPowerUp(random.randint(1,3))
+        return GameWindow.powerUpTable[random.randint(1, 3)]
 
 
     # - timer event starting the loop
     def timerEvent(self, event):
-        if self.barrel.i == self.player.i and self.barrel.j == self.player.j:
+        if self.barrel.i == self.player.i and self.barrel.j == self.player.j and not self.player.isShielded:
             self.player.type.setX(0)
             self.player.type.setY(0)
             self.player.i = 9
             self.player.j = 19
+            self.scene.removeItem(self.barrel.type)
+        elif self.barrel.i == self.player.i and self.barrel.j == self.player.j and self.player.isShielded:
+            self.player.isShielded = False
+            self.player.type.setBrush(QColor(86, 130, 3))
+            self.scene.removeItem(self.barrel.type)
 
         if self.game_timer_id == event.timerId():
             if 10 > (self.kong.i + self.kong.direction) > -1:
@@ -154,24 +159,40 @@ class GameWindow(QMainWindow):
         if key == Qt.Key_A:
             if (self.player.i - 1) > -1:
                 if self.design[self.player.j][self.player.i-1] == 'b' or self.design[self.player.j][self.player.i-1] == 'l':
+                    if self.player.i == self.powerUp.i and self.player.j == self.powerUp.j:
+                        self.player.isShielded = True
+                        self.player.type.setBrush(QColor(0, 135, 189))
+                        self.scene.removeItem(self.powerUp.type)
                     self.player.i -= 1
                     self.player.type.setX(self.player.type.x()-32)
 
         if key == Qt.Key_D:
             if (self.player.i + 1) < 10:
                 if self.design[self.player.j][self.player.i+1] == 'b' or self.design[self.player.j][self.player.i+1] == 'l':
+                    if self.player.i == self.powerUp.i and self.player.j == self.powerUp.j:
+                        self.player.isShielded = True
+                        self.player.type.setBrush(QColor(0, 135, 189))
+                        self.scene.removeItem(self.powerUp.type)
                     self.player.i += 1
                     self.player.type.setX(self.player.type.x()+32)
 
         if key == Qt.Key_W:
             if (self.player.j - 1) > -1:
                 if self.design[self.player.j - 1][self.player.i] == 'l':
+                    if self.player.i == self.powerUp.i and self.player.j == self.powerUp.j:
+                        self.player.isShielded = True
+                        self.player.type.setBrush(QColor(0, 135, 189))
+                        self.scene.removeItem(self.powerUp.type)
                     self.player.j -= 1
                     self.player.type.setY(self.player.type.y()-32)
 
         if key == Qt.Key_S:
             if (self.player.j + 1) < 20:
                 if self.design[self.player.j + 1][self.player.i] == 'l':
+                    if self.player.i == self.powerUp.i and self.player.j == self.powerUp.j:
+                        self.player.isShielded = True
+                        self.player.type.setBrush(QColor(0, 135, 189))
+                        self.scene.removeItem(self.powerUp.type)
                     self.player.j += 1
                     self.player.type.setY(self.player.type.y() + 32)
 
@@ -191,8 +212,6 @@ class GameWindow(QMainWindow):
                     newRect.setBrush(Qt.red)
                 elif self.design[i][j] == 'l':
                     newRect.setBrush(Qt.magenta)
-                elif self.design[i][j] == 'p':
-                    newRect.setBrush(Qt.blue)
 
                 self.scene.addItem(newRect)
 
