@@ -1,18 +1,19 @@
 from datetime import timedelta
-
 from PyQt5.QtCore import QTime, Qt, QTimer
 
-time = QTime()
-time.start()
-cur_time = ""
+class GameTime():
+    def __init__(self):
+        self.time = QTime()
+        self.time.start()
+        self.cur_time = ""
 
-timer = QTimer()
-timer.timeout.connect(lambda: update_elapsed_time())
-timer.start(500)
+        self.timer = QTimer()
+        self.timer.timeout.connect(lambda: self.update_elapsed_time(self))
+        self.timer.start(500)
 
 
-def update_elapsed_time():
-    cur_time = timedelta(seconds=time.elapsed())
+    def update_elapsed_time(self):
+        self.cur_time = timedelta(seconds=self.time.elapsed())
 
 
 

@@ -4,11 +4,16 @@ from PyQt5.QtCore import Qt, QRectF, QBasicTimer
 from PyQt5.QtGui import QColor
 from Player import Player
 from Kong import Kong
-from Timer import time, cur_time
+from Timer import GameTime
 from Barrel import Barrel
+import random
 
 
 class GameWindow(QMainWindow):
+    powerUpTable = (
+        (9, 15), (3, 11), (0,19)
+    )
+
     def __init__(self, parent=None):
         super(GameWindow, self).__init__(parent)
 
@@ -18,7 +23,8 @@ class GameWindow(QMainWindow):
 
         #basic time to be implemented later into a timer
         #-self.statusBar().showMessage('{}'.format(time.toString()))
-        self.statusBar().showMessage('{}'.format(cur_time))
+        #self.statusBar().showMessage('{}'.format(GameTime.cur_time))
+        self.statusBar().showMessage('{}'.format(""))
 
         #window settings and basic properties
         self.size = 32
@@ -50,7 +56,9 @@ class GameWindow(QMainWindow):
                        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
                        ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'l', 'e'],
                        ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'l', 'b']]
-        # e - empty, b - beam, l - ladder
+        # e - empty, b - beam, l - ladder, p - power up
+
+        self.setRandomPosition()
 
         self.drawScene()
 
@@ -84,6 +92,14 @@ class GameWindow(QMainWindow):
         self.elapsed_timer = QBasicTimer
 
         self.show()
+
+    def setPowerUp(self, position):
+        table = GameWindow.powerUpTable[position]
+        self.design[table] = 'p'
+
+    def setRandomPosition(self):
+        self.setPowerUp(random.randint(1,3))
+
 
     # - timer event starting the loop
     def timerEvent(self, event):
@@ -175,6 +191,8 @@ class GameWindow(QMainWindow):
                     newRect.setBrush(Qt.red)
                 elif self.design[i][j] == 'l':
                     newRect.setBrush(Qt.magenta)
+                elif self.design[i][j] == 'p':
+                    newRect.setBrush(Qt.blue)
 
                 self.scene.addItem(newRect)
 

@@ -6,3 +6,4 @@ class Player():
         self.j = b
         self.type = QGraphicsEllipseItem(self.i*size, self.j*size, size, size)
         self.type.setBrush(QColor(red, green, blue))
+        self.isShielded = False
