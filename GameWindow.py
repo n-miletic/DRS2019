@@ -22,16 +22,16 @@ class GameWindow(QMainWindow):
         self.setFocusPolicy(Qt.StrongFocus)
         self.keys_pressed = set()
 
-        #basic time to be implemented later into a timer
-        #-self.statusBar().showMessage('{}'.format(time.toString()))
-        #self.statusBar().showMessage('{}'.format(GameTime.cur_time))
+        # basic time to be implemented later into a timer
+        # -self.statusBar().showMessage('{}'.format(time.toString()))
+        # self.statusBar().showMessage('{}'.format(GameTime.cur_time))
         self.statusBar().showMessage('{}'.format(""))
 
-        #window settings and basic properties
+        # window settings and basic properties
         self.size = 32
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
-        #self.isGameOver = False
+        # self.isGameOver = False
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)
@@ -61,16 +61,16 @@ class GameWindow(QMainWindow):
 
         self.drawScene()
 
-        #powerUp initialization
+        # powerUp initialization
         (a, b) = self.setRandomPosition()
         self.powerUp = PowerUp(a, b, 0, 0, 255, self.size)
         self.scene.addItem(self.powerUp.type)
 
-        #player initialization
+        # player initialization
         self.player = Player(9, 19, 86, 130, 3, self.size)
         self.scene.addItem(self.player.type)
 
-        #Donkey Kong initialization
+        # Donkey Kong initialization
         self.kong = Kong(0, 7, 123, 63, 0, self.size, 1);
         self.scene.addItem(self.kong.type)
 
@@ -100,18 +100,17 @@ class GameWindow(QMainWindow):
     def setRandomPosition(self):
         return GameWindow.powerUpTable[random.randint(1, 3)]
 
-
     # - timer event starting the loop
     def timerEvent(self, event):
-        if self.barrel.i == self.player.i and self.barrel.j == self.player.j and not self.player.isShielded:
-            self.player.type.setX(0)
-            self.player.type.setY(0)
-            self.player.i = 9
-            self.player.j = 19
-            self.scene.removeItem(self.barrel.type)
-        elif self.barrel.i == self.player.i and self.barrel.j == self.player.j and self.player.isShielded:
-            self.player.isShielded = False
-            self.player.type.setBrush(QColor(86, 130, 3))
+        if self.barrel.i == self.player.i and self.barrel.j == self.player.j:
+            if self.player.isShielded:
+                self.player.isShielded = False
+                self.player.type.setBrush(QColor(86, 130, 3))
+            else:
+                self.player.type.setX(0)
+                self.player.type.setY(0)
+                self.player.i = 9
+                self.player.j = 19
             self.scene.removeItem(self.barrel.type)
 
         if self.game_timer_id == event.timerId():
@@ -142,8 +141,6 @@ class GameWindow(QMainWindow):
                     # end of the board
                     self.scene.removeItem(self.barrel.type)
                     self.barrel.isBarrelThrown = False
-
-
 
         # if self.is_game_over is False:
             # self.game_update()
