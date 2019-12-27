@@ -103,7 +103,7 @@ class GameWindow(QMainWindow):
         self.show()
 
     def setRandomPosition(self):
-        return GameWindow.powerUpTable[random.randint(1, 3)]
+        return GameWindow.powerUpTable[random.randint(0, 2)]
 
     # - timer event starting the loop
     def timerEvent(self, event):
