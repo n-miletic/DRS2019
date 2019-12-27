@@ -1,13 +1,15 @@
 from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphicsEllipseItem, QDesktopWidget, \
     QGraphicsRectItem
+from threading import Thread
 from PyQt5.QtCore import Qt, QRectF, QBasicTimer
 from PyQt5.QtGui import QColor
 from Player import Player
 from Kong import Kong
-from Timer import GameTime
+from Timer import Timer
 from Barrel import Barrel
 from PowerUp import PowerUp
 import random
+import time
 
 
 class GameWindow(QMainWindow):
@@ -24,8 +26,8 @@ class GameWindow(QMainWindow):
 
         # basic time to be implemented later into a timer
         # -self.statusBar().showMessage('{}'.format(time.toString()))
-        # self.statusBar().showMessage('{}'.format(GameTime.cur_time))
-        self.statusBar().showMessage('{}'.format(""))
+        self.statusBar().showMessage('{}'.format("0:00:00"))
+        # self.statusBar().showMessage('{}'.format(""))
 
         # window settings and basic properties
         self.size = 32
@@ -93,7 +95,10 @@ class GameWindow(QMainWindow):
         self.barrel.mvmID = self.barrel.movementTimer.timerId()
 
         # -game time passed
-        self.elapsed_timer = QBasicTimer
+        self.elapsed_timer = Timer()
+
+        self.elapsed_timer_thread = Thread(target=self.elapsed_time_scheduler)
+        self.elapsed_timer_thread.start()
 
         self.show()
 
@@ -213,3 +218,8 @@ class GameWindow(QMainWindow):
 
                 self.scene.addItem(newRect)
 
+    def elapsed_time_scheduler(self):
+        while True:
+            self.elapsed_timer.update_elapsed_time()
+            self.statusBar().showMessage('{}'.format(self.elapsed_timer.cur_time))
+            time.sleep(0.5)
