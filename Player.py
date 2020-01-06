@@ -4,6 +4,8 @@ class Player():
     def __init__(self, a, b, red, green, blue, size):
         self.i = a
         self.j = b
+        self.maxJ = 19
+        self.score = 0
         self.type = QGraphicsEllipseItem(self.i*size, self.j*size, size, size)
         self.type.setBrush(QColor(red, green, blue))
         self.isShielded = False

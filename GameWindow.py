@@ -73,7 +73,7 @@ class GameWindow(QMainWindow):
         self.scene.addItem(self.player.type)
 
         # Donkey Kong initialization
-        self.kong = Kong(0, 7, 123, 63, 0, self.size, 1);
+        self.kong = Kong(0, 7, 123, 63, 0, self.size, 1)
         self.scene.addItem(self.kong.type)
 
         # -timer that synchronizes collision events
@@ -187,6 +187,10 @@ class GameWindow(QMainWindow):
                         self.player.type.setBrush(QColor(0, 135, 189))
                         self.scene.removeItem(self.powerUp.type)
                     self.player.j -= 1
+                    if self.player.maxJ > self.player.j:
+                        self.player.maxJ = self.player.j
+                        if self.player.maxJ == 2 or self.player.maxJ == 7 or self.player.maxJ == 11 or self.player.maxJ == 15 or self.player.maxJ == 19:
+                            self.player.score += 10
                     self.player.type.setY(self.player.type.y()-32)
 
         if key == Qt.Key_S:
