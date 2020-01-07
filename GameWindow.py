@@ -225,5 +225,5 @@ class GameWindow(QMainWindow):
     def elapsed_time_scheduler(self):
         while True:
             self.elapsed_timer.update_elapsed_time()
-            self.statusBar().showMessage('{}'.format(self.elapsed_timer.cur_time))
+            self.statusBar().showMessage('{}            P1:{}'.format(self.elapsed_timer.cur_time, self.player.score))
             time.sleep(0.5)
