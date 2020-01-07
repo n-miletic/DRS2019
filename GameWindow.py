@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphicsEllipseItem, QDesktopWidget, \
     QGraphicsRectItem
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from threading import Thread
 from PyQt5.QtCore import Qt, QRectF, QBasicTimer
 from PyQt5.QtGui import QColor
@@ -115,8 +116,10 @@ class GameWindow(QMainWindow):
             else:
                 self.player.type.setX(0)
                 self.player.type.setY(0)
-                self.player.i = 9
-                self.player.j = 19
+                self.player.i = -2
+                self.player.j = -2
+                self.scene.removeItem(self.player.type)
+                self.game_over_event()
             self.scene.removeItem(self.barrel.type)
 
         if self.game_timer_id == event.timerId():
@@ -152,6 +155,12 @@ class GameWindow(QMainWindow):
             # self.game_update()
     # def game_update(self):
         # self.kong.setX(self.kong.x()+32)
+
+    def game_over_event(self):
+        poeni = '{}            P1:{}'.format(self.elapsed_timer.cur_time, self.player.score)
+        buttonReply = QMessageBox.question(self, 'Game over', 'Score: ' + poeni, QMessageBox.Ok)
+        if buttonReply == QMessageBox.Ok:
+            self.close()
 
     # - when key is pressed
     def keyPressEvent(self, event):
