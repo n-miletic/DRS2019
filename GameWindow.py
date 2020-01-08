@@ -9,6 +9,7 @@ from Kong import Kong
 from Timer import Timer
 from Barrel import Barrel
 from PowerUp import PowerUp
+from Princess import Princess
 import random
 import time
 
@@ -73,9 +74,14 @@ class GameWindow(QMainWindow):
         self.player = Player(9, 19, 86, 130, 3, self.size)
         self.scene.addItem(self.player.type)
 
+        # princess initialization
+        self.princess = Princess(255, 192, 203, self.size)
+        self.scene.addItem(self.princess.type)
+
         # Donkey Kong initialization
         self.kong = Kong(0, 7, 123, 63, 0, self.size, 1)
         self.scene.addItem(self.kong.type)
+
 
         # -timer that synchronizes collision events
         self.game_update_timer = QBasicTimer()
@@ -156,9 +162,22 @@ class GameWindow(QMainWindow):
     # def game_update(self):
         # self.kong.setX(self.kong.x()+32)
 
+    def levelUp(self):
+        self.kong.i = 0
+        self.kong.type.setX(self.kong.i*self.size)
+        self.kong.j = 7
+        self.kong.type.setY(self.kong.j*self.size)
+        self.player.i = 9
+        self.player.type.setX(self.player.i*self.size)
+        self.player.j = 19
+        self.player.type.setY(self.player.j*self.size)
+        self.player.maxJ = 19
+        self.barrel.speed -= 10
+        self.barrel.isBarrelThrown = False
+
     def game_over_event(self):
-        poeni = '{}            P1:{}'.format(self.elapsed_timer.cur_time, self.player.score)
-        buttonReply = QMessageBox.question(self, 'Game over', 'Score: ' + poeni, QMessageBox.Ok)
+        points = '{}            P1:{}'.format(self.elapsed_timer.cur_time, self.player.score)
+        buttonReply = QMessageBox.question(self, 'Game over', 'Score: ' + points, QMessageBox.Ok)
         if buttonReply == QMessageBox.Ok:
             self.close()
 
@@ -177,6 +196,8 @@ class GameWindow(QMainWindow):
                         self.scene.removeItem(self.powerUp.type)
                     self.player.i -= 1
                     self.player.type.setX(self.player.type.x()-32)
+                    if self.player.i == self.princess.i and self.player.j == self.princess.j:
+                        self.levelUp()
 
         if key == Qt.Key_D:
             if (self.player.i + 1) < 10:

@@ -1,4 +1,3 @@
-
 from GameWindow import GameWindow
 from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout, QDesktopWidget, QGroupBox, QGridLayout, QLabel
 from PyQt5.QtCore import Qt
@@ -41,7 +40,7 @@ class MainMenu(QWidget):
     def on_pushSinglePlayerButton_clicked(self):
         self.dialog = GameWindow()
         self.dialog.show()
-        self.close()
+        #self.close()
 
     def center(self):
         qr = self.frameGeometry()
