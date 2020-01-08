@@ -128,6 +128,14 @@ class GameWindow(QMainWindow):
                 self.game_over_event()
             self.scene.removeItem(self.barrel.type)
 
+        if self.player.i == self.kong.i and self.player.j == self.kong.j:
+            self.player.type.setX(0)
+            self.player.type.setY(0)
+            self.player.i = -2
+            self.player.j = -2
+            self.scene.removeItem(self.player.type)
+            self.game_over_event()
+
         if self.game_timer_id == event.timerId():
             if 10 > (self.kong.i + self.kong.direction) > -1:
                 if self.design[self.kong.j][self.kong.i + self.kong.direction] == 'b' or self.design[self.kong.j][self.kong.i + self.kong.direction] == 'l':
@@ -164,16 +172,25 @@ class GameWindow(QMainWindow):
 
     def levelUp(self):
         self.kong.i = 0
-        self.kong.type.setX(self.kong.i*self.size)
+        self.kong.type.setX(0)
         self.kong.j = 7
-        self.kong.type.setY(self.kong.j*self.size)
+        self.kong.type.setY(0)
         self.player.i = 9
-        self.player.type.setX(self.player.i*self.size)
+        self.player.type.setX(0)
         self.player.j = 19
-        self.player.type.setY(self.player.j*self.size)
+        self.player.type.setY(0)
         self.player.maxJ = 19
-        self.barrel.speed -= 10
+        if self.barrel.speed > 25:
+            self.barrel.speed -= 25
+            self.barrel.movementTimer.stop()
+            self.barrel.movementTimer.start(self.barrel.speed, self)
         self.barrel.isBarrelThrown = False
+
+        (a, b) = self.setRandomPosition()
+        self.scene.removeItem(self.powerUp.type)
+        self.powerUp.i = a
+        self.powerUp.j = b
+        self.scene.addItem(self.powerUp.type)
 
     def game_over_event(self):
         points = '{}            P1:{}'.format(self.elapsed_timer.cur_time, self.player.score)
