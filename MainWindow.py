@@ -1,4 +1,5 @@
 from GameWindow import GameWindow
+from Multiplayer import Multiplayer
 from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout, QDesktopWidget, QGroupBox, QGridLayout, QLabel
 from PyQt5.QtCore import Qt
 
@@ -28,8 +29,7 @@ class MainMenu(QWidget):
         self.setLayout(windowLayout)
 
         self.widget1.clicked.connect(self.on_pushSinglePlayerButton_clicked)
-
-
+        self.widget2.clicked.connect(self.on_pushMultiPlayerButton_clicked)
         self.widget3.clicked.connect(self.on_pushExitButton_clicked)
 
         self.show()
@@ -41,6 +41,10 @@ class MainMenu(QWidget):
         self.dialog = GameWindow()
         self.dialog.show()
         #self.close()
+
+    def on_pushMultiPlayerButton_clicked(self):
+        self.dialog = Multiplayer()
+        self.dialog.show()
 
     def center(self):
         qr = self.frameGeometry()

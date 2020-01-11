@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ab0fa11-8cf9-4185-a48e-0de66d6475dc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Multiplayer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578398157068</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Lives Implementation&#10;Score Update&#10;Level Up Bug Fix">
+      <created>1578735706750</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1578735706750</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TodoView">
@@ -250,41 +257,42 @@
     <MESSAGE value="Power Up modification and interaction" />
     <MESSAGE value="Score implementation" />
     <MESSAGE value="Score implementation and Score Board" />
-    <option name="LAST_COMMIT_MESSAGE" value="Score implementation and Score Board" />
+    <MESSAGE value="Lives Implementation&#10;Score Update&#10;Level Up Bug Fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lives Implementation&#10;Score Update&#10;Level Up Bug Fix" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1578398154005">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1578735704876">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1578398154005" />
-    <state width="1345" height="241" key="GridCell.Tab.0.bottom" timestamp="1578735564181">
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1578735704876" />
+    <state width="1345" height="97" key="GridCell.Tab.0.bottom" timestamp="1578756643517">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="241" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1578735564181" />
-    <state width="1345" height="241" key="GridCell.Tab.0.center" timestamp="1578735564181">
+    <state width="1345" height="97" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1578756643517" />
+    <state width="1345" height="97" key="GridCell.Tab.0.center" timestamp="1578756643516">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="241" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1578735564181" />
-    <state width="1345" height="241" key="GridCell.Tab.0.left" timestamp="1578735564181">
+    <state width="1345" height="97" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1578756643516" />
+    <state width="1345" height="97" key="GridCell.Tab.0.left" timestamp="1578756643516">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="241" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1578735564181" />
-    <state width="1345" height="241" key="GridCell.Tab.0.right" timestamp="1578735564181">
+    <state width="1345" height="97" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1578756643516" />
+    <state width="1345" height="97" key="GridCell.Tab.0.right" timestamp="1578756643516">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="241" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1578735564181" />
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1578398792733">
+    <state width="1345" height="97" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1578756643516" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1578735717062">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1578398792733" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1578735717062" />
     <state x="379" y="194" key="com.intellij.ide.util.TipDialog" timestamp="1578504628501">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="379" y="194" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1578504628501" />
-    <state x="492" y="287" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578506190288">
+    <state x="492" y="287" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578747573056">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="492" y="287" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.738@0.0.1366.738" timestamp="1578506190288" />
+    <state x="492" y="287" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.738@0.0.1366.738" timestamp="1578747573056" />
     <state x="0" y="0" width="1181" height="454" key="dock-window-1" timestamp="1578510652902">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
