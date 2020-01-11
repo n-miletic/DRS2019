@@ -120,21 +120,35 @@ class GameWindow(QMainWindow):
                 self.player.isShielded = False
                 self.player.type.setBrush(QColor(86, 130, 3))
             else:
+                self.player.lives -= 1
+                if self.player.lives == 0:
+                    self.player.type.setX(0)
+                    self.player.type.setY(0)
+                    self.player.i = -2
+                    self.player.j = -2
+                    self.scene.removeItem(self.player.type)
+                    self.game_over_event()
+                else:
+                    self.player.i = 9
+                    self.player.type.setX(0)
+                    self.player.j = 19
+                    self.player.type.setY(0)
+            self.scene.removeItem(self.barrel.type)
+
+        if self.player.i == self.kong.i and self.player.j == self.kong.j:
+            self.player.lives -= 1
+            if self.player.lives == 0:
                 self.player.type.setX(0)
                 self.player.type.setY(0)
                 self.player.i = -2
                 self.player.j = -2
                 self.scene.removeItem(self.player.type)
                 self.game_over_event()
-            self.scene.removeItem(self.barrel.type)
-
-        if self.player.i == self.kong.i and self.player.j == self.kong.j:
-            self.player.type.setX(0)
-            self.player.type.setY(0)
-            self.player.i = -2
-            self.player.j = -2
-            self.scene.removeItem(self.player.type)
-            self.game_over_event()
+            else:
+                self.player.i = 9
+                self.player.type.setX(0)
+                self.player.j = 19
+                self.player.type.setY(0)
 
         if self.game_timer_id == event.timerId():
             if 10 > (self.kong.i + self.kong.direction) > -1:
@@ -165,11 +179,6 @@ class GameWindow(QMainWindow):
                     self.scene.removeItem(self.barrel.type)
                     self.barrel.isBarrelThrown = False
 
-        # if self.is_game_over is False:
-            # self.game_update()
-    # def game_update(self):
-        # self.kong.setX(self.kong.x()+32)
-
     def levelUp(self):
         self.kong.i = 0
         self.kong.type.setX(0)
@@ -185,16 +194,17 @@ class GameWindow(QMainWindow):
             self.barrel.movementTimer.stop()
             self.barrel.movementTimer.start(self.barrel.speed, self)
         self.barrel.isBarrelThrown = False
-
         (a, b) = self.setRandomPosition()
         self.scene.removeItem(self.powerUp.type)
         self.powerUp.i = a
+        self.powerUp.type.setX(0)
         self.powerUp.j = b
+        self.powerUp.type.setY(0)
         self.scene.addItem(self.powerUp.type)
 
     def game_over_event(self):
-        points = '{}            P1:{}'.format(self.elapsed_timer.cur_time, self.player.score)
-        buttonReply = QMessageBox.question(self, 'Game over', 'Score: ' + points, QMessageBox.Ok)
+        points = '{}            P1:{}'.format(self.elapsed_timer.cur_time.seconds, self.player.score)
+        buttonReply = QMessageBox.question(self, 'Game over', 'Elapsed time: ' + points, QMessageBox.Ok)
         if buttonReply == QMessageBox.Ok:
             self.close()
 
@@ -237,7 +247,7 @@ class GameWindow(QMainWindow):
                     if self.player.maxJ > self.player.j:
                         self.player.maxJ = self.player.j
                         if self.player.maxJ == 2 or self.player.maxJ == 7 or self.player.maxJ == 11 or self.player.maxJ == 15 or self.player.maxJ == 19:
-                            self.player.score += 10
+                            self.player.score += 1
                     self.player.type.setY(self.player.type.y()-32)
 
         if key == Qt.Key_S:
@@ -272,5 +282,5 @@ class GameWindow(QMainWindow):
     def elapsed_time_scheduler(self):
         while True:
             self.elapsed_timer.update_elapsed_time()
-            self.statusBar().showMessage('{}            P1:{}'.format(self.elapsed_timer.cur_time, self.player.score))
+            self.statusBar().showMessage('Elapsed time:{}   Lives:{}    P1:{}'.format(self.elapsed_timer.cur_time.seconds, self.player.lives, self.player.score))
             time.sleep(0.5)
