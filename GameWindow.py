@@ -203,8 +203,9 @@ class GameWindow(QMainWindow):
         self.scene.addItem(self.powerUp.type)
 
     def game_over_event(self):
-        points = '{}            P1:{}'.format(self.elapsed_timer.cur_time.seconds, self.player.score)
-        buttonReply = QMessageBox.question(self, 'Game over', 'Elapsed time: ' + points, QMessageBox.Ok)
+        points = 'Elapsed time:{}  || P1: Score:{}'.format(
+            self.elapsed_timer.cur_time.seconds, self.player.score)
+        buttonReply = QMessageBox.question(self, 'Game over', 'Total ' + points, QMessageBox.Ok)
         if buttonReply == QMessageBox.Ok:
             self.close()
 

@@ -244,12 +244,12 @@ class Multiplayer(QMainWindow):
         self.scene.addItem(self.powerUp.type)
 
     def game_over_event(self):
-        points = 'Elapsed time:{}  || P1: Lives:{} Score:{} || P2: Lives:{} Score:{} '.format(
-            self.elapsed_timer.cur_time.seconds, self.player1.lives, self.player1.score, self.player2.lives,
-            self.player2.score)
-        buttonReply = QMessageBox.question(self, 'Game over', 'Total ' + points, QMessageBox.Ok)
-        if buttonReply == QMessageBox.Ok:
-            self.close()
+        if self.player1.lives == 0 and self.player2.lives == 0:
+            points = 'Elapsed time:{}  || P1: Score:{} || P2: Score:{} '.format(
+                self.elapsed_timer.cur_time.seconds, self.player1.score, self.player2.score)
+            buttonReply = QMessageBox.question(self, 'Game over', 'Total ' + points, QMessageBox.Ok)
+            if buttonReply == QMessageBox.Ok:
+                self.close()
 
     # - when key is pressed
     def keyPressEvent(self, event):
