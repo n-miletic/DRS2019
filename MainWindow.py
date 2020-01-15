@@ -2,6 +2,9 @@ from GameWindow import GameWindow
 from Multiplayer import Multiplayer
 from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout, QDesktopWidget, QGroupBox, QGridLayout, QLabel
 from PyQt5.QtCore import Qt
+from processKong import ProcessKong
+import multiprocessing as mp
+import time
 
 
 class MainMenu(QWidget):
@@ -32,14 +35,21 @@ class MainMenu(QWidget):
         self.widget2.clicked.connect(self.on_pushMultiPlayerButton_clicked)
         self.widget3.clicked.connect(self.on_pushExitButton_clicked)
 
+
+
         self.show()
 
     def on_pushExitButton_clicked(self):
         self.close()
 
     def on_pushSinglePlayerButton_clicked(self):
-        self.dialog = GameWindow()
+        exPipe, inPipe = mp.Pipe()
+        process = ProcessKong(pipe=exPipe)
+        process.start()
+        self.dialog = GameWindow(inPipe)
+        # self.dialog = GameWindow()
         self.dialog.show()
+
         #self.close()
 
     def on_pushMultiPlayerButton_clicked(self):
@@ -71,3 +81,9 @@ class MainMenu(QWidget):
 
         self.horizontalGroupBox.setLayout(layout)
 
+    def runner(self, q: mp.Queue):
+        go = q.get()
+        for i in range(20):
+            for j in range(10):
+                q.put('{}_{}'.format(i, j))
+                time.sleep(0.01)

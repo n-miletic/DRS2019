@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphic
     QGraphicsRectItem
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from threading import Thread
-from PyQt5.QtCore import Qt, QRectF, QBasicTimer
+from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot
 from PyQt5.QtGui import QColor
 from Player import Player
 from Kong import Kong
@@ -10,8 +10,10 @@ from Timer import Timer
 from Barrel import Barrel
 from PowerUp import PowerUp
 from Princess import Princess
+from workerKong import WorkerKong
 import random
 import time
+import multiprocessing as mp
 
 
 class GameWindow(QMainWindow):
@@ -19,12 +21,14 @@ class GameWindow(QMainWindow):
         (3, 15), (9, 11), (0, 19)
     )
 
-    def __init__(self, parent=None):
+    def __init__(self, pipe: mp.Pipe, parent=None):
         super(GameWindow, self).__init__(parent)
 
         # enables key event handling
         self.setFocusPolicy(Qt.StrongFocus)
         self.keys_pressed = set()
+
+        self.worker = WorkerKong(pipe)
 
         # basic time to be implemented later into a timer
         # -self.statusBar().showMessage('{}'.format(time.toString()))
@@ -63,24 +67,26 @@ class GameWindow(QMainWindow):
                        ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'l', 'b']]
         # e - empty, b - beam, l - ladder, p - power up
 
-        self.drawScene()
+        # self.drawScene()
+        self.worker.update.connect(self.listen)
+        self.worker.start()
 
         # powerUp initialization
         (a, b) = self.setRandomPosition()
         self.powerUp = PowerUp(a, b, 0, 0, 255, self.size)
-        self.scene.addItem(self.powerUp.type)
+        # self.scene.addItem(self.powerUp.type)
 
         # player initialization
         self.player = Player(9, 19, 86, 130, 3, self.size)
-        self.scene.addItem(self.player.type)
+        # self.scene.addItem(self.player.type)
 
         # princess initialization
         self.princess = Princess(255, 192, 203, self.size)
-        self.scene.addItem(self.princess.type)
+        # self.scene.addItem(self.princess.type)
 
         # Donkey Kong initialization
         self.kong = Kong(0, 7, 123, 63, 0, self.size, 1)
-        self.scene.addItem(self.kong.type)
+        # self.scene.addItem(self.kong.type)
 
 
         # -timer that synchronizes collision events
@@ -207,6 +213,7 @@ class GameWindow(QMainWindow):
             self.elapsed_timer.cur_time.seconds, self.player.score)
         buttonReply = QMessageBox.question(self, 'Game over', 'Total ' + points, QMessageBox.Ok)
         if buttonReply == QMessageBox.Ok:
+            self.elapsed_timer_thread.isAlive = False
             self.close()
 
     # - when key is pressed
@@ -285,3 +292,27 @@ class GameWindow(QMainWindow):
             self.elapsed_timer.update_elapsed_time()
             self.statusBar().showMessage('Elapsed time:{}   Lives:{}    P1:{}'.format(self.elapsed_timer.cur_time.seconds, self.player.lives, self.player.score))
             time.sleep(0.5)
+
+    @pyqtSlot()
+    def listen(self):
+        for i in range(20):
+            for j in range(10):
+                newRect = QGraphicsRectItem(QRectF(j*32, i*32, self.size, self.size))
+                if self.design[i][j] == 'e':
+                    newRect.setBrush(Qt.black)
+                elif self.design[i][j] == 'b':
+                    newRect.setBrush(Qt.red)
+                elif self.design[i][j] == 'l':
+                    newRect.setBrush(Qt.magenta)
+
+                self.scene.addItem(newRect)
+
+        self.addStuff()
+
+    def addStuff(self):
+        self.scene.addItem(self.powerUp.type)
+        self.scene.addItem(self.player.type)
+        self.scene.addItem(self.princess.type)
+        self.scene.addItem(self.kong.type)
+        self.worker.finishWork()
+
