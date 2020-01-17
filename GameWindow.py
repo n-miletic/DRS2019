@@ -67,27 +67,21 @@ class GameWindow(QMainWindow):
                        ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'l', 'b']]
         # e - empty, b - beam, l - ladder, p - power up
 
-        # self.drawScene()
         self.worker.update.connect(self.listen)
         self.worker.start()
 
         # powerUp initialization
         (a, b) = self.setRandomPosition()
         self.powerUp = PowerUp(a, b, 0, 0, 255, self.size)
-        # self.scene.addItem(self.powerUp.type)
 
         # player initialization
         self.player = Player(9, 19, 86, 130, 3, self.size)
-        # self.scene.addItem(self.player.type)
 
         # princess initialization
         self.princess = Princess(255, 192, 203, self.size)
-        # self.scene.addItem(self.princess.type)
 
         # Donkey Kong initialization
         self.kong = Kong(0, 7, 123, 63, 0, self.size, 1)
-        # self.scene.addItem(self.kong.type)
-
 
         # -timer that synchronizes collision events
         self.game_update_timer = QBasicTimer()
@@ -273,19 +267,6 @@ class GameWindow(QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-
-    def drawScene(self):
-        for i in range(20):
-            for j in range(10):
-                newRect = QGraphicsRectItem(QRectF(j*32, i*32, self.size, self.size))
-                if self.design[i][j] == 'e':
-                    newRect.setBrush(Qt.black)
-                elif self.design[i][j] == 'b':
-                    newRect.setBrush(Qt.red)
-                elif self.design[i][j] == 'l':
-                    newRect.setBrush(Qt.magenta)
-
-                self.scene.addItem(newRect)
 
     def elapsed_time_scheduler(self):
         while True:

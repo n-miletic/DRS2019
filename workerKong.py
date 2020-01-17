@@ -2,6 +2,7 @@ from worker import Worker
 import multiprocessing as mp
 
 class WorkerKong(Worker):
+
     def __init__(self, pipe: mp.Pipe):
         super().__init__()
         self.pipe = pipe

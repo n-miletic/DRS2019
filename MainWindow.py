@@ -47,13 +47,15 @@ class MainMenu(QWidget):
         process = ProcessKong(pipe=exPipe)
         process.start()
         self.dialog = GameWindow(inPipe)
-        # self.dialog = GameWindow()
         self.dialog.show()
 
         #self.close()
 
     def on_pushMultiPlayerButton_clicked(self):
-        self.dialog = Multiplayer()
+        exPipeMp, inPipeMp = mp.Pipe()
+        process = ProcessKong(pipe=exPipeMp)
+        process.start()
+        self.dialog = Multiplayer(inPipeMp)
         self.dialog.show()
 
     def center(self):
