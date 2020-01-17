@@ -1,9 +1,9 @@
 from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphicsEllipseItem, QDesktopWidget, \
-    QGraphicsRectItem
+    QGraphicsRectItem, QGraphicsPixmapItem
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from threading import Thread
-from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot, QSize
-from PyQt5.QtGui import QColor
+from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot
+from PyQt5.QtGui import QColor, QPixmap
 from Player import Player
 from Kong import Kong
 from Timer import Timer
@@ -40,7 +40,6 @@ class GameWindow(QMainWindow):
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
         # self.isGameOver = False
-        self.setFixedSize(QSize(10*self.size+10, 20*self.size+25))
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)
@@ -280,12 +279,21 @@ class GameWindow(QMainWindow):
         for i in range(20):
             for j in range(10):
                 newRect = QGraphicsRectItem(QRectF(j*32, i*32, self.size, self.size))
+                newPixmap = QGraphicsPixmapItem(QPixmap('./GResource/Beam.png'))
+                newPixmap.setX(j * 32)
+                newPixmap.setY(i * 32)
                 if self.design[i][j] == 'e':
                     newRect.setBrush(Qt.black)
                 elif self.design[i][j] == 'b':
-                    newRect.setBrush(Qt.red)
+                    #newRect.setBrush(Qt.red)
+                    newRect = newPixmap
+                    self.scene.addItem(newPixmap)
                 elif self.design[i][j] == 'l':
-                    newRect.setBrush(Qt.magenta)
+                    #newRect.setBrush(Qt.magenta)
+                    newPixmap = QGraphicsPixmapItem(QPixmap('./GResource/Ladder.png'))
+                    newPixmap.setX(j * 32)
+                    newPixmap.setY(i * 32)
+                    newRect = newPixmap
 
                 self.scene.addItem(newRect)
 
