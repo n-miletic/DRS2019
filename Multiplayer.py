@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphic
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from threading import Thread
 from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot, QSize
-from PyQt5.QtGui import QColor, QMovie, QPixmap
+from PyQt5.QtGui import QIcon, QMovie, QPixmap
 from Player import Player
 from Kong import Kong
 from Timer import Timer
@@ -38,6 +38,7 @@ class Multiplayer(QMainWindow):
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 20, 20*self.size + 30)
         self.setFixedSize(QSize(10*self.size + 20, 20*self.size + 30))
+        self.setWindowIcon(QIcon('./GResource/golden_banana.png'))
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)
@@ -319,7 +320,7 @@ class Multiplayer(QMainWindow):
                 if self.design[self.player2.j][self.player2.i+1] == 'b' or self.design[self.player2.j][self.player2.i+1] == 'l':
                     if self.player2.i == self.powerUp.i and self.player2.j == self.powerUp.j:
                         self.player2.isShielded = True
-                        self.player2.type.setPixmap(QPixmap('./GResource/player1_shield.gif'))
+                        self.player2.type.setPixmap(QPixmap('./GResource/player2_shield.gif'))
                         self.scene.removeItem(self.powerUp.type)
                     self.player2.i += 1
                     self.player2.type.setX(self.player2.type.x()+32)
@@ -349,7 +350,7 @@ class Multiplayer(QMainWindow):
     def elapsed_time_scheduler(self):
         while True:
             self.elapsed_timer.update_elapsed_time()
-            self.statusBar().showMessage('Elapsed time:{}  || P1: Lives:{} Score:{} || P2: Lives:{} Score:{} '.format(self.elapsed_timer.cur_time.seconds, self.player1.lives, self.player1.score, self.player2.lives, self.player2.score))
+            self.statusBar().showMessage('Elapsed time: {}s  || P1: Lives:{} Score:{} || P2: Lives:{} Score:{} '.format(self.elapsed_timer.cur_time.seconds, self.player1.lives, self.player1.score, self.player2.lives, self.player2.score))
             time.sleep(0.5)
 
     @pyqtSlot()

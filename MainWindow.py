@@ -2,6 +2,7 @@ from GameWindow import GameWindow
 from Multiplayer import Multiplayer
 from PyQt5.QtWidgets import QWidget, QPushButton, QVBoxLayout, QDesktopWidget, QGroupBox, QGridLayout, QLabel
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 from processKong import ProcessKong
 import multiprocessing as mp
 import time
@@ -14,7 +15,8 @@ class MainMenu(QWidget):
 
         self.size = 64
         self.setWindowTitle('Golden Banana')
-        self.setGeometry(300, 150, 15 * self.size, 11 * self.size)
+        self.setGeometry(300, 150, 14 * self.size, 10 * self.size)
+        self.setWindowIcon(QIcon('./GResource/golden_banana.png'))
         self.center()
 
         # coloring
