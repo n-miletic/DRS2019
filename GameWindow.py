@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphic
     QGraphicsRectItem, QGraphicsPixmapItem
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from threading import Thread
-from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot
+from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot, QSize
 from PyQt5.QtGui import QColor, QPixmap
 from Player import Player
 from Kong import Kong
@@ -40,6 +40,7 @@ class GameWindow(QMainWindow):
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
         # self.isGameOver = False
+        self.setFixedSize(QSize(10*self.size + 10, 20*self.size + 25))
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)
@@ -203,7 +204,7 @@ class GameWindow(QMainWindow):
         self.scene.addItem(self.powerUp.type)
 
     def game_over_event(self):
-        points = 'Elapsed time:{}  || P1: Score:{}'.format(
+        points = 'Elapsed time: {}s  || P1: Score: {}'.format(
             self.elapsed_timer.cur_time.seconds, self.player.score)
         buttonReply = QMessageBox.question(self, 'Game over', 'Total ' + points, QMessageBox.Ok)
         if buttonReply == QMessageBox.Ok:

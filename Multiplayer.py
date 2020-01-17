@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphic
     QGraphicsRectItem
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from threading import Thread
-from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot
+from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot, QSize
 from PyQt5.QtGui import QColor
 from Player import Player
 from Kong import Kong
@@ -37,7 +37,8 @@ class Multiplayer(QMainWindow):
         self.size = 32
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
-        self.setGeometry(300, 150, 10 * self.size + 10, 20 * self.size + 25)
+        self.setFixedSize(QSize(10*self.size + 10, 20*self.size + 25))
+
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)
@@ -252,7 +253,7 @@ class Multiplayer(QMainWindow):
 
     def game_over_event(self):
         if self.player1.lives == 0 and self.player2.lives == 0:
-            points = 'Elapsed time:{}  || P1: Score:{} || P2: Score:{} '.format(
+            points = 'Elapsed time: {}s  || P1: Score: {} || P2: Score: {} '.format(
                 self.elapsed_timer.cur_time.seconds, self.player1.score, self.player2.score)
             buttonReply = QMessageBox.question(self, 'Game over', 'Total ' + points, QMessageBox.Ok)
             if buttonReply == QMessageBox.Ok:
