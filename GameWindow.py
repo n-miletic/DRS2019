@@ -1,9 +1,9 @@
 from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphicsEllipseItem, QDesktopWidget, \
-    QGraphicsRectItem, QGraphicsPixmapItem
+    QGraphicsRectItem, QGraphicsPixmapItem, QLabel
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from threading import Thread
 from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot, QSize
-from PyQt5.QtGui import QColor, QPixmap
+from PyQt5.QtGui import QColor, QPixmap, QMovie
 from Player import Player
 from Kong import Kong
 from Timer import Timer
@@ -38,9 +38,9 @@ class GameWindow(QMainWindow):
         # window settings and basic properties
         self.size = 32
         self.setWindowTitle('Donkey Kong')
-        self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
+        self.setGeometry(300, 150, 10*self.size + 20, 20*self.size + 30)
         # self.isGameOver = False
-        self.setFixedSize(QSize(10*self.size + 10, 20*self.size + 25))
+        self.setFixedSize(QSize(10*self.size + 20, 20*self.size + 30))
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)
@@ -107,6 +107,12 @@ class GameWindow(QMainWindow):
 
         self.elapsed_timer_thread = Thread(target=self.elapsed_time_scheduler)
         self.elapsed_timer_thread.start()
+
+        self.animation = QLabel('', self)
+        movie = QMovie('./GResource/princess.gif')
+        self.animation.setMovie(movie)
+        movie.start()
+        self.animation.move(3 * self.size, 2 * self.size)
 
         self.show()
 
@@ -303,7 +309,7 @@ class GameWindow(QMainWindow):
     def addStuff(self):
         self.scene.addItem(self.powerUp.type)
         self.scene.addItem(self.player.type)
-        self.scene.addItem(self.princess.type)
+        #self.scene.addItem(self.princess.type)
         self.scene.addItem(self.kong.type)
         self.worker.finishWork()
 
