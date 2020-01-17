@@ -31,15 +31,12 @@ class GameWindow(QMainWindow):
         self.worker = WorkerKong(pipe)
 
         # basic time to be implemented later into a timer
-        # -self.statusBar().showMessage('{}'.format(time.toString()))
         self.statusBar().showMessage('{}'.format("0:00:00"))
-        # self.statusBar().showMessage('{}'.format(""))
 
         # window settings and basic properties
         self.size = 32
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 20, 20*self.size + 30)
-        # self.isGameOver = False
         self.setFixedSize(QSize(10*self.size + 20, 20*self.size + 30))
         self.center()
         self.scene = QGraphicsScene(self)
@@ -76,7 +73,7 @@ class GameWindow(QMainWindow):
         self.powerUp = PowerUp(a, b, 0, 0, 255, self.size)
 
         # player initialization
-        self.player = Player(9, 19, 86, 130, 3, self.size)
+        self.player = Player(9, 19, './GResource/player1.gif', self.size)
 
         # princess initialization
         self.princess = Princess(255, 192, 203, self.size)
@@ -145,17 +142,17 @@ class GameWindow(QMainWindow):
         if self.player.i == self.kong.i and self.player.j == self.kong.j:
             self.player.lives -= 1
             if self.player.lives == 0:
-                self.player.type.setX(0)
-                self.player.type.setY(0)
+                self.player.type.setX(self.player.i*self.size)
+                self.player.type.setY(self.player.j*self.size)
                 self.player.i = -2
                 self.player.j = -2
                 self.scene.removeItem(self.player.type)
                 self.game_over_event()
             else:
                 self.player.i = 9
-                self.player.type.setX(0)
+                self.player.type.setX(self.player.i*self.size0)
                 self.player.j = 19
-                self.player.type.setY(0)
+                self.player.type.setY(self.player.j*self.size)
 
         if self.game_timer_id == event.timerId():
             if 10 > (self.kong.i + self.kong.direction) > -1:
@@ -188,13 +185,13 @@ class GameWindow(QMainWindow):
 
     def levelUp(self):
         self.kong.i = 0
-        self.kong.type.setX(0)
+        self.kong.type.setX(self.kong.i*self.size)
         self.kong.j = 7
-        self.kong.type.setY(0)
+        self.kong.type.setY(self.kong.j*self.size)
         self.player.i = 9
-        self.player.type.setX(0)
+        self.player.type.setX(self.player.i*self.size)
         self.player.j = 19
-        self.player.type.setY(0)
+        self.player.type.setY(self.player.j*self.size)
         self.player.maxJ = 19
         if self.barrel.speed > 25:
             self.barrel.speed -= 25
@@ -204,9 +201,9 @@ class GameWindow(QMainWindow):
         (a, b) = self.setRandomPosition()
         self.scene.removeItem(self.powerUp.type)
         self.powerUp.i = a
-        self.powerUp.type.setX(0)
+        self.powerUp.type.setX(self.powerUp.i*self.size)
         self.powerUp.j = b
-        self.powerUp.type.setY(0)
+        self.powerUp.type.setY(self.powerUp.j*self.size)
         self.scene.addItem(self.powerUp.type)
 
     def game_over_event(self):
@@ -240,7 +237,6 @@ class GameWindow(QMainWindow):
                 if self.design[self.player.j][self.player.i+1] == 'b' or self.design[self.player.j][self.player.i+1] == 'l':
                     if self.player.i == self.powerUp.i and self.player.j == self.powerUp.j:
                         self.player.isShielded = True
-                        #self.player.type.setBrush(QColor(0, 135, 189))
                         self.player.type.setPixmap(QPixmap('./GResource/player1_shield.gif'))
                         self.scene.removeItem(self.powerUp.type)
                     self.player.i += 1

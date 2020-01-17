@@ -1,9 +1,9 @@
 from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphicsEllipseItem, QDesktopWidget, \
-    QGraphicsRectItem
+    QGraphicsRectItem, QLabel, QGraphicsPixmapItem
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from threading import Thread
 from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot, QSize
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QMovie, QPixmap
 from Player import Player
 from Kong import Kong
 from Timer import Timer
@@ -36,9 +36,8 @@ class Multiplayer(QMainWindow):
         # window settings and basic properties
         self.size = 32
         self.setWindowTitle('Donkey Kong')
-        self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
-        self.setFixedSize(QSize(10*self.size + 10, 20*self.size + 25))
-
+        self.setGeometry(300, 150, 10*self.size + 20, 20*self.size + 30)
+        self.setFixedSize(QSize(10*self.size + 20, 20*self.size + 30))
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)
@@ -66,30 +65,24 @@ class Multiplayer(QMainWindow):
                        ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'l', 'b']]
         # e - empty, b - beam, l - ladder, p - power up
 
-        #self.drawScene()
         self.worker.update.connect(self.listen)
         self.worker.start()
 
         # powerUp initialization
         (a, b) = self.setRandomPosition()
         self.powerUp = PowerUp(a, b, 0, 0, 255, self.size)
-        #self.scene.addItem(self.powerUp.type)
 
         # player initialization
-        self.player1 = Player(9, 19, 162, 120, 181, self.size)
-        #self.scene.addItem(self.player1.type)
+        self.player1 = Player(9, 19, './GResource/player1.gif', self.size)
 
         # player initialization
-        self.player2 = Player(0, 19, 82, 222, 151, self.size)
-        #self.scene.addItem(self.player2.type)
+        self.player2 = Player(0, 19, './GResource/player2.gif', self.size)
 
         # princess initialization
         self.princess = Princess(255, 192, 203, self.size)
-        #self.scene.addItem(self.princess.type)
 
         # Donkey Kong initialization
         self.kong = Kong(0, 7, 123, 63, 0, self.size, 1)
-        #self.scene.addItem(self.kong.type)
 
         # -timer that synchronizes collision events
         self.game_update_timer = QBasicTimer()
@@ -115,6 +108,12 @@ class Multiplayer(QMainWindow):
         self.elapsed_timer_thread = Thread(target=self.elapsed_time_scheduler)
         self.elapsed_timer_thread.start()
 
+        self.animation = QLabel('', self)
+        movie = QMovie('./GResource/princess.gif')
+        self.animation.setMovie(movie)
+        movie.start()
+        self.animation.move(3 * self.size, 2 * self.size)
+
         self.show()
 
     def setRandomPosition(self):
@@ -126,21 +125,21 @@ class Multiplayer(QMainWindow):
             self.barrel.isBarrelThrown = False
             if self.player1.isShielded:
                 self.player1.isShielded = False
-                self.player1.type.setBrush(QColor(162, 120, 181))
+                self.player1.type.setPixmap(QPixmap(self.player1.res))
             else:
                 self.player1.lives -= 1
                 if self.player1.lives == 0:
-                    self.player1.type.setX(0)
-                    self.player1.type.setY(0)
+                    self.player1.type.setX(self.player1.i*self.size)
+                    self.player1.type.setY(self.player1.j*self.size)
                     self.player1.i = -2
                     self.player1.j = -2
                     self.scene.removeItem(self.player1.type)
                     self.game_over_event()
                 else:
                     self.player1.i = 9
-                    self.player1.type.setX(0)
+                    self.player1.type.setX(self.player1.i*self.size)
                     self.player1.j = 19
-                    self.player1.type.setY(0)
+                    self.player1.type.setY(self.player1.j*self.size)
             self.scene.removeItem(self.barrel.type)
 
         if self.player1.i == self.kong.i and self.player1.j == self.kong.j:
@@ -154,29 +153,29 @@ class Multiplayer(QMainWindow):
                 self.game_over_event()
             else:
                 self.player1.i = 9
-                self.player1.type.setX(0)
+                self.player1.type.setX(self.player1.i*self.size)
                 self.player1.j = 19
-                self.player1.type.setY(0)
+                self.player1.type.setY(self.player1.j*self.size)
 
         if self.barrel.i == self.player2.i and self.barrel.j == self.player2.j and self.barrel.isBarrelThrown:
             self.barrel.isBarrelThrown = False
             if self.player2.isShielded:
                 self.player2.isShielded = False
-                self.player2.type.setBrush(QColor(82, 222, 151))
+                self.player2.type.setPixmap(QPixmap(self.player2.res))
             else:
                 self.player2.lives -= 1
                 if self.player2.lives == 0:
-                    self.player2.type.setX(0)
-                    self.player2.type.setY(0)
+                    self.player2.type.setX(self.player2.i*self.size)
+                    self.player2.type.setY(self.player2.j*self.size)
                     self.player2.i = -2
                     self.player2.j = -2
                     self.scene.removeItem(self.player2.type)
                     self.game_over_event()
                 else:
                     self.player2.i = 0
-                    self.player2.type.setX(0)
+                    self.player2.type.setX(self.player2.i*self.size)
                     self.player2.j = 19
-                    self.player2.type.setY(0)
+                    self.player2.type.setY(self.player2.j*self.size)
             self.scene.removeItem(self.barrel.type)
 
         if self.player2.i == self.kong.i and self.player2.j == self.kong.j:
@@ -189,10 +188,10 @@ class Multiplayer(QMainWindow):
                 self.scene.removeItem(self.player2.type)
                 self.game_over_event()
             else:
-                self.player2.i = 9
-                self.player2.type.setX(0)
+                self.player2.i = 0
+                self.player2.type.setX(self.player2.i*self.size)
                 self.player2.j = 19
-                self.player2.type.setY(0)
+                self.player2.type.setY(self.player2.j*self.size)
 
         if self.game_timer_id == event.timerId():
             if 10 > (self.kong.i + self.kong.direction) > -1:
@@ -225,18 +224,18 @@ class Multiplayer(QMainWindow):
 
     def levelUp(self):
         self.kong.i = 0
-        self.kong.type.setX(0)
+        self.kong.type.setX(self.kong.i*self.size)
         self.kong.j = 7
-        self.kong.type.setY(0)
+        self.kong.type.setY(self.kong.j*self.size)
         self.player1.i = 9
-        self.player1.type.setX(0)
+        self.player1.type.setX(self.player1.i*self.size)
         self.player1.j = 19
-        self.player1.type.setY(0)
+        self.player1.type.setY(self.player1.j*self.size)
         self.player1.maxJ = 19
         self.player2.i = 0
-        self.player2.type.setX(0)
+        self.player2.type.setX(self.player2.i*self.size)
         self.player2.j = 19
-        self.player2.type.setY(0)
+        self.player2.type.setY(self.player2.j*self.size)
         self.player2.maxJ = 19
         if self.barrel.speed > 25:
             self.barrel.speed -= 25
@@ -246,9 +245,9 @@ class Multiplayer(QMainWindow):
         (a, b) = self.setRandomPosition()
         self.scene.removeItem(self.powerUp.type)
         self.powerUp.i = a
-        self.powerUp.type.setX(0)
+        self.powerUp.type.setX(self.powerUp.i*self.size)
         self.powerUp.j = b
-        self.powerUp.type.setY(0)
+        self.powerUp.type.setY(self.powerUp.j*self.size)
         self.scene.addItem(self.powerUp.type)
 
     def game_over_event(self):
@@ -270,7 +269,7 @@ class Multiplayer(QMainWindow):
                 if self.design[self.player1.j][self.player1.i-1] == 'b' or self.design[self.player1.j][self.player1.i-1] == 'l':
                     if self.player1.i == self.powerUp.i and self.player1.j == self.powerUp.j:
                         self.player1.isShielded = True
-                        self.player1.type.setBrush(QColor(125, 79, 145))
+                        self.player1.type.setPixmap(QPixmap('./GResource/player1_shield.gif'))
                         self.scene.removeItem(self.powerUp.type)
                     self.player1.i -= 1
                     self.player1.type.setX(self.player1.type.x()-32)
@@ -282,7 +281,7 @@ class Multiplayer(QMainWindow):
                 if self.design[self.player1.j][self.player1.i+1] == 'b' or self.design[self.player1.j][self.player1.i+1] == 'l':
                     if self.player1.i == self.powerUp.i and self.player1.j == self.powerUp.j:
                         self.player1.isShielded = True
-                        self.player1.type.setBrush(QColor(125, 79, 145))
+                        self.player1.type.setPixmap(QPixmap('./GResource/player1_shield.gif'))
                         self.scene.removeItem(self.powerUp.type)
                     self.player1.i += 1
                     self.player1.type.setX(self.player1.type.x()+32)
@@ -290,10 +289,6 @@ class Multiplayer(QMainWindow):
         if key == Qt.Key_W:
             if (self.player1.j - 1) > -1:
                 if self.design[self.player1.j - 1][self.player1.i] == 'l':
-                    if self.player1.i == self.powerUp.i and self.player1.j == self.powerUp.j:
-                        self.player1.isShielded = True
-                        self.player1.type.setBrush(QColor(125, 79, 145))
-                        self.scene.removeItem(self.powerUp.type)
                     self.player1.j -= 1
                     if self.player1.maxJ > self.player1.j:
                         self.player1.maxJ = self.player1.j
@@ -304,10 +299,6 @@ class Multiplayer(QMainWindow):
         if key == Qt.Key_S:
             if (self.player1.j + 1) < 20:
                 if self.design[self.player1.j + 1][self.player1.i] == 'l':
-                    if self.player1.i == self.powerUp.i and self.player1.j == self.powerUp.j:
-                        self.player1.isShielded = True
-                        self.player1.type.setBrush(QColor(125, 79, 145))
-                        self.scene.removeItem(self.powerUp.type)
                     self.player1.j += 1
                     self.player1.type.setY(self.player1.type.y() + 32)
 
@@ -316,7 +307,7 @@ class Multiplayer(QMainWindow):
                 if self.design[self.player2.j][self.player2.i-1] == 'b' or self.design[self.player2.j][self.player2.i-1] == 'l':
                     if self.player2.i == self.powerUp.i and self.player2.j == self.powerUp.j:
                         self.player2.isShielded = True
-                        self.player2.type.setBrush(QColor(44, 120, 115))
+                        self.player2.type.setPixmap(QPixmap('./GResource/player2_shield.gif'))
                         self.scene.removeItem(self.powerUp.type)
                     self.player2.i -= 1
                     self.player2.type.setX(self.player2.type.x()-32)
@@ -328,7 +319,7 @@ class Multiplayer(QMainWindow):
                 if self.design[self.player2.j][self.player2.i+1] == 'b' or self.design[self.player2.j][self.player2.i+1] == 'l':
                     if self.player2.i == self.powerUp.i and self.player2.j == self.powerUp.j:
                         self.player2.isShielded = True
-                        self.player2.type.setBrush(QColor(44, 120, 115))
+                        self.player2.type.setPixmap(QPixmap('./GResource/player1_shield.gif'))
                         self.scene.removeItem(self.powerUp.type)
                     self.player2.i += 1
                     self.player2.type.setX(self.player2.type.x()+32)
@@ -336,10 +327,6 @@ class Multiplayer(QMainWindow):
         if key == Qt.Key_I:
             if (self.player2.j - 1) > -1:
                 if self.design[self.player2.j - 1][self.player2.i] == 'l':
-                    if self.player2.i == self.powerUp.i and self.player2.j == self.powerUp.j:
-                        self.player2.isShielded = True
-                        self.player2.type.setBrush(QColor(44, 120, 115))
-                        self.scene.removeItem(self.powerUp.type)
                     self.player2.j -= 1
                     if self.player2.maxJ > self.player2.j:
                         self.player2.maxJ = self.player2.j
@@ -350,10 +337,6 @@ class Multiplayer(QMainWindow):
         if key == Qt.Key_K:
             if (self.player2.j + 1) < 20:
                 if self.design[self.player2.j + 1][self.player2.i] == 'l':
-                    if self.player2.i == self.powerUp.i and self.player2.j == self.powerUp.j:
-                        self.player2.isShielded = True
-                        self.player2.type.setBrush(QColor(44, 120, 115))
-                        self.scene.removeItem(self.powerUp.type)
                     self.player2.j += 1
                     self.player2.type.setY(self.player2.type.y() + 32)
 
@@ -362,19 +345,6 @@ class Multiplayer(QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-
-    def drawScene(self):
-        for i in range(20):
-            for j in range(10):
-                newRect = QGraphicsRectItem(QRectF(j*32, i*32, self.size, self.size))
-                if self.design[i][j] == 'e':
-                    newRect.setBrush(Qt.black)
-                elif self.design[i][j] == 'b':
-                    newRect.setBrush(Qt.red)
-                elif self.design[i][j] == 'l':
-                    newRect.setBrush(Qt.magenta)
-
-                self.scene.addItem(newRect)
 
     def elapsed_time_scheduler(self):
         while True:
@@ -386,13 +356,20 @@ class Multiplayer(QMainWindow):
     def listen(self):
         for i in range(20):
             for j in range(10):
-                newRect = QGraphicsRectItem(QRectF(j * 32, i * 32, self.size, self.size))
+                newRect = QGraphicsRectItem(QRectF(j*32, i*32, self.size, self.size))
+                newPixmap = QGraphicsPixmapItem(QPixmap('./GResource/Beam.png'))
+                newPixmap.setX(j * 32)
+                newPixmap.setY(i * 32)
                 if self.design[i][j] == 'e':
                     newRect.setBrush(Qt.black)
                 elif self.design[i][j] == 'b':
-                    newRect.setBrush(Qt.red)
+                    newRect = newPixmap
+                    self.scene.addItem(newPixmap)
                 elif self.design[i][j] == 'l':
-                    newRect.setBrush(Qt.magenta)
+                    newPixmap = QGraphicsPixmapItem(QPixmap('./GResource/Ladder.png'))
+                    newPixmap.setX(j * 32)
+                    newPixmap.setY(i * 32)
+                    newRect = newPixmap
 
                 self.scene.addItem(newRect)
 
@@ -402,7 +379,6 @@ class Multiplayer(QMainWindow):
         self.scene.addItem(self.powerUp.type)
         self.scene.addItem(self.player1.type)
         self.scene.addItem(self.player2.type)
-        self.scene.addItem(self.princess.type)
         self.scene.addItem(self.kong.type)
         self.worker.finishWork()
 
