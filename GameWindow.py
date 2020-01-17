@@ -125,7 +125,7 @@ class GameWindow(QMainWindow):
             self.barrel.isBarrelThrown = False
             if self.player.isShielded:
                 self.player.isShielded = False
-                self.player.type.setBrush(QColor(86, 130, 3))
+                self.player.type.setPixmap(QPixmap('./GResource/player1.gif'))
             else:
                 self.player.lives -= 1
                 if self.player.lives == 0:
@@ -137,9 +137,9 @@ class GameWindow(QMainWindow):
                     self.game_over_event()
                 else:
                     self.player.i = 9
-                    self.player.type.setX(0)
+                    self.player.type.setX(self.player.i*self.size)
                     self.player.j = 19
-                    self.player.type.setY(0)
+                    self.player.type.setY(self.player.j*self.size)
             self.scene.removeItem(self.barrel.type)
 
         if self.player.i == self.kong.i and self.player.j == self.kong.j:
@@ -228,7 +228,7 @@ class GameWindow(QMainWindow):
                 if self.design[self.player.j][self.player.i-1] == 'b' or self.design[self.player.j][self.player.i-1] == 'l':
                     if self.player.i == self.powerUp.i and self.player.j == self.powerUp.j:
                         self.player.isShielded = True
-                        self.player.type.setBrush(QColor(0, 135, 189))
+                        self.player.type.setPixmap(QPixmap('./GResource/player1_shield.gif'))
                         self.scene.removeItem(self.powerUp.type)
                     self.player.i -= 1
                     self.player.type.setX(self.player.type.x()-32)
@@ -240,7 +240,8 @@ class GameWindow(QMainWindow):
                 if self.design[self.player.j][self.player.i+1] == 'b' or self.design[self.player.j][self.player.i+1] == 'l':
                     if self.player.i == self.powerUp.i and self.player.j == self.powerUp.j:
                         self.player.isShielded = True
-                        self.player.type.setBrush(QColor(0, 135, 189))
+                        #self.player.type.setBrush(QColor(0, 135, 189))
+                        self.player.type.setPixmap(QPixmap('./GResource/player1_shield.gif'))
                         self.scene.removeItem(self.powerUp.type)
                     self.player.i += 1
                     self.player.type.setX(self.player.type.x()+32)
@@ -248,10 +249,6 @@ class GameWindow(QMainWindow):
         if key == Qt.Key_W:
             if (self.player.j - 1) > -1:
                 if self.design[self.player.j - 1][self.player.i] == 'l':
-                    if self.player.i == self.powerUp.i and self.player.j == self.powerUp.j:
-                        self.player.isShielded = True
-                        self.player.type.setBrush(QColor(0, 135, 189))
-                        self.scene.removeItem(self.powerUp.type)
                     self.player.j -= 1
                     if self.player.maxJ > self.player.j:
                         self.player.maxJ = self.player.j
@@ -262,10 +259,6 @@ class GameWindow(QMainWindow):
         if key == Qt.Key_S:
             if (self.player.j + 1) < 20:
                 if self.design[self.player.j + 1][self.player.i] == 'l':
-                    if self.player.i == self.powerUp.i and self.player.j == self.powerUp.j:
-                        self.player.isShielded = True
-                        self.player.type.setBrush(QColor(0, 135, 189))
-                        self.scene.removeItem(self.powerUp.type)
                     self.player.j += 1
                     self.player.type.setY(self.player.type.y() + 32)
 
