@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f9abb9b-b696-4922-9b51-25cf783093b6" name="Default Changelist" comment="Beam and Ladder test graphic resource">
-      <change afterPath="$PROJECT_DIR$/GResource/Beam.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GResource/Ladder.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GResource/barrel.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GResource/kong.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GResource/player1.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GResource/player1_shield.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GResource/player2.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GResource/player2_shield.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GResource/princess.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GResource/shield.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multiplayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Multiplayer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +248,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579130339879</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Graphic bit resources">
+      <created>1579271360227</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1579271360227</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView">
@@ -286,33 +284,34 @@
     <MESSAGE value="Lives Implementation&#10;Score Update&#10;Level Up Bug Fix" />
     <MESSAGE value="Multiplayer Implementation tbm" />
     <MESSAGE value="Added map building to a separate process" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added map building to a separate process" />
+    <MESSAGE value="Graphic bit resources" />
+    <option name="LAST_COMMIT_MESSAGE" value="Graphic bit resources" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1579268459976">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1579276248143">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1579268459976" />
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1579267391216">
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1579276248143" />
+    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1579283142147">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1579267391216" />
-    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1579267391216">
+    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1579283142147" />
+    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1579283142146">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1579267391216" />
-    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1579267391215">
+    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1579283142146" />
+    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1579283142146">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1579267391215" />
-    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1579267391216">
+    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1579283142146" />
+    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1579283142146">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1579267391216" />
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1578757025879">
+    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1579283142146" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1579271363448">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1578757025879" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1579271363448" />
     <state x="379" y="194" key="com.intellij.ide.util.TipDialog" timestamp="1578840584733">
       <screen x="0" y="0" width="1366" height="738" />
     </state>

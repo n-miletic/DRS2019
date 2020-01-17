@@ -37,6 +37,7 @@ class Multiplayer(QMainWindow):
         self.size = 32
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
+        self.setGeometry(300, 150, 10 * self.size + 10, 20 * self.size + 25)
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)

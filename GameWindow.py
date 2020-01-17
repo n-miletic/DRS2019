@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QGraphicsScene, QGraphicsView, QGraphic
     QGraphicsRectItem
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from threading import Thread
-from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot
+from PyQt5.QtCore import Qt, QRectF, QBasicTimer, pyqtSlot, QSize
 from PyQt5.QtGui import QColor
 from Player import Player
 from Kong import Kong
@@ -40,6 +40,7 @@ class GameWindow(QMainWindow):
         self.setWindowTitle('Donkey Kong')
         self.setGeometry(300, 150, 10*self.size + 10, 20*self.size + 25)
         # self.isGameOver = False
+        self.setFixedSize(QSize(10*self.size+10, 20*self.size+25))
         self.center()
         self.scene = QGraphicsScene(self)
         view = QGraphicsView(self.scene)
@@ -271,7 +272,7 @@ class GameWindow(QMainWindow):
     def elapsed_time_scheduler(self):
         while True:
             self.elapsed_timer.update_elapsed_time()
-            self.statusBar().showMessage('Elapsed time:{}   Lives:{}    P1:{}'.format(self.elapsed_timer.cur_time.seconds, self.player.lives, self.player.score))
+            self.statusBar().showMessage('Elapsed time:{}  || P1: Lives:{} Score:{}'.format(self.elapsed_timer.cur_time.seconds, self.player.lives, self.player.score))
             time.sleep(0.5)
 
     @pyqtSlot()
